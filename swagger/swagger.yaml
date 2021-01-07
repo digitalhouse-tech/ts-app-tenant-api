@@ -126,7 +126,9 @@ components:
         redirectOnOpen:
           type: boolean
           description: Indica si la estrategia debe redireccionar a otro login al abrir el tenant
-          
+        enablePublicSignUp:
+          type: boolean
+          description: Indica si la estrategia debe permitir registro de personas o sólo servirá para autenticación
     NativeAuthStrategy:
       type: object
     SuccessResponse:
