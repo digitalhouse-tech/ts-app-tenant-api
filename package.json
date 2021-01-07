@@ -1,0 +1,19 @@
+{
+    "name": "pg-tenant-api",
+    "version": "1.0.0",
+    "description": "Serverless CRUD service exposing a REST HTTP interface",
+    "author": "",
+    "license": "MIT",
+    "scripts": {
+        "start": "sls offline start",
+        "dynamodb-admin": "AWS_SECRET_ACCESS_KEY=fake AWS_ACCESS_KEY_ID=fake AWS_REGION=local DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin"
+    },
+    "dependencies": {
+        "moment": "^2.29.1",
+        "playhouse-nodejs-common": "git+https://npm:9ZfTjMYPgSsHL_vVt29f@gitlab.com/dhteam/playhouse-nodejs-common.git#PGD-832/add-serverless-success-response",
+        "uuid": "^2.0.3"
+    },
+    "devDependencies": {
+        "serverless-offline": "^6.8.0"
+    }
+}

@@ -1,0 +1,140 @@
+openapi: 3.0.0
+servers:
+  - description: Development Server
+    url: 'http://playground-tenant-api.vm/dev'
+info:
+  version: 1.0.0
+  title: Tenants
+  contact:
+    email: enzo@digitalhouse.com
+paths:
+  /:
+    post:
+      tags:
+        - Tenants
+      summary: Create a new tenant
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tenant'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Tenant'
+  /{name}:
+    get:
+      tags:
+        - Tenants
+      summary: Retrieve tenant info
+      operationId: get-by-name
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Tenant'
+  /{_id}:
+    put:
+      tags:
+        - Tenants
+      summary: Update tenant info
+      operationId: update
+      parameters:
+        - in: path
+          name: _id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tenant'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/Tenant'
+components:
+  schemas:
+    Tenant:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+          description: Indica el nombre único del tenant
+        authStrategies:
+          type: array
+          description: Indica la(s) estrategia(s) de autenticación permitidas para el tenant 
+          items:
+            $ref: '#/components/schemas/AuthStrategy'
+    AuthStrategy:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - OAuthStrategy
+            - NativeAuthStrategy
+        config:
+          oneOf:
+            - $ref: '#/components/schemas/OAuthStrategy'
+            - $ref: '#/components/schemas/NativeAuthStrategy'
+    OAuthStrategy:
+      type: object
+      properties:
+        provider:
+          type: string
+          enum:
+            - GOOGLE
+            - MELI
+          description: Indica el tipo de proveedor de OAuth
+        providerUrl:
+          type: string
+          description: Indica la url del provider a la que se debe redireccionar
+        buttonOnNativeLogin:
+          type: boolean
+          description: Indica si la estrategia pertenece a un botón del login nativo
+        redirectOnOpen:
+          type: boolean
+          description: Indica si la estrategia debe redireccionar a otro login al abrir el tenant
+          
+    NativeAuthStrategy:
+      type: object
+    SuccessResponse:
+      type: object
+      properties:
+        code:
+          type: number
+        status:
+          type: string
+        message:
+          type: string
