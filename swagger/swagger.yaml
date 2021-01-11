@@ -30,7 +30,7 @@ paths:
                   - properties:
                       data:
                         $ref: '#/components/schemas/Tenant'
-  /{name}:
+  /{_id}:
     get:
       tags:
         - Tenants
@@ -38,10 +38,11 @@ paths:
       operationId: get-by-name
       parameters:
         - in: path
-          name: name
+          name: _id
           required: true
           schema:
             type: string
+          description: Acepta un uuidv4 o el nombre del tenant
       responses:
         '200':
           description: Success
@@ -53,7 +54,6 @@ paths:
                   - properties:
                       data:
                         $ref: '#/components/schemas/Tenant'
-  /{_id}:
     put:
       tags:
         - Tenants
@@ -91,6 +91,30 @@ components:
         name:
           type: string
           description: Indica el nombre único del tenant
+        logoUrl:
+          type: string
+          description: Url del logo que se debe mostrar en el frontend
+        canonicalDNS:
+          type: string
+          description: Nombre canónico que será usado por el tenant
+        lookandfeelUrl:
+          type: string
+          description: Url de las variables de css para el look&feel del tenant
+        logoutUrl:
+          type: string
+          description: Sí existe, indica la url a la que se debe redireccionar al usuario al cerrar sesión
+        lang:
+          type: string
+          enum:
+            - es-AR
+            - pt-BR
+          description: Indica el idioma con el que se debe mostrar el tenant
+        country:
+          type: string
+          enum:
+            - ar
+            - br
+          description: Indica el país root al que pertenece el tenant
         authStrategies:
           type: array
           description: Indica la(s) estrategia(s) de autenticación permitidas para el tenant 
@@ -111,6 +135,9 @@ components:
     OAuthStrategy:
       type: object
       properties:
+        hierarchy:
+          type: number
+          description: Indica la jerarquía de la estrategia sobre de las demás
         provider:
           type: string
           enum:
@@ -131,6 +158,10 @@ components:
           description: Indica si la estrategia debe permitir registro de personas o sólo servirá para autenticación
     NativeAuthStrategy:
       type: object
+      properties:
+        hierarchy:
+          type: number
+          description: Indica la jerarquía de la estrategia sobre de las demás
     SuccessResponse:
       type: object
       properties:

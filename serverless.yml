@@ -18,11 +18,11 @@ provider:
   environment: ${file(./env.${opt:stage, 'local'}.json)}
 
 functions:
-  get-by-name:
-    handler: tenants/get-by-name.handler
+  get-by-id:
+    handler: tenants/get-by-id.handler
     events:
       - http:
-          path: /{name}
+          path: /{id}
           method: get
           cors: true
   create:
