@@ -6,7 +6,9 @@
     "license": "MIT",
     "scripts": {
         "start": "sls offline start",
-        "dynamodb-admin": "AWS_SECRET_ACCESS_KEY=fake AWS_ACCESS_KEY_ID=fake AWS_REGION=local DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin"
+        "dynamodb-admin": "AWS_SECRET_ACCESS_KEY=fake AWS_ACCESS_KEY_ID=fake AWS_REGION=local DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin",
+        "migrate": "NODE_ENV=local node ./migrations --up",
+        "migrate:down": "NODE_ENV=local node ./migrations --down"
     },
     "dependencies": {
         "moment": "^2.29.1",
@@ -14,6 +16,7 @@
         "uuid": "^2.0.3"
     },
     "devDependencies": {
+        "dotenv-json": "^1.0.0",
         "serverless-offline": "^6.8.0"
     }
 }
