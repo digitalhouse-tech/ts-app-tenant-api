@@ -247,6 +247,9 @@ components:
         enablePublicSignUp:
           type: boolean
           description: Indica si la estrategia debe permitir registro de personas o sólo servirá para autenticación
+        enablePublicEnrolment:
+          type: boolean
+          description: Indica si la estrategia debe permitir inscripción pública de personas
         clientId:
           type: string
           description: ID de cliente en el proveedor de oauth

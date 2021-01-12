@@ -57,6 +57,8 @@ module.exports.handler = (event, context, callback) => {
                     tokenURL: strategy.config.tokenURL,
                     authorizationURL: strategy.config.authorizationURL,
                     enablePublicSignUp: strategy.config.enablePublicSignUp,
+                    enablePublicEnrolment:
+                        strategy.config.enablePublicEnrolment,
                 },
             }
         })
