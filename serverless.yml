@@ -25,6 +25,20 @@ functions:
           path: /{id}
           method: get
           cors: true
+  get-by-host:
+    handler: tenants/get-by-host.handler
+    events:
+      - http:
+          path: /host/{name}
+          method: get
+          cors: true
+  get-strategies-by-host:
+    handler: tenants/get-strategies-by-host.handler
+    events:
+      - http:
+          path: /host/{name}/strategies
+          method: get
+          cors: true
   create:
     handler: tenants/create.handler
     events:

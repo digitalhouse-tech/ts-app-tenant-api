@@ -18,7 +18,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Tenant'
+              $ref: '#/components/schemas/CreateTenant'
       responses:
         '200':
           description: Success
@@ -29,20 +29,20 @@ paths:
                   - $ref: '#/components/schemas/SuccessResponse'
                   - properties:
                       data:
-                        $ref: '#/components/schemas/Tenant'
-  /{_id}:
+                        $ref: '#/components/schemas/CreateTenant'
+  /{id}:
     get:
       tags:
         - Tenants
       summary: Retrieve tenant info
-      operationId: get-by-name
+      operationId: get-by-id
       parameters:
         - in: path
-          name: _id
+          name: id
           required: true
           schema:
             type: string
-          description: Acepta un uuidv4 o el nombre del tenant
+          description: uuidv4 del tenant
       responses:
         '200':
           description: Success
@@ -69,7 +69,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Tenant'
+              $ref: '#/components/schemas/UpdateTenant'
       responses:
         '200':
           description: Success
@@ -80,23 +80,65 @@ paths:
                   - $ref: '#/components/schemas/SuccessResponse'
                   - properties:
                       data:
-                        $ref: '#/components/schemas/Tenant'
+                        $ref: '#/components/schemas/UpdateTenant'
+  /host/{name}:
+    get:
+      tags:
+        - Tenants
+      summary: Retrieve tenant info by hostname
+      operationId: get-by-host
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          description: Nombre del host perteneciente al cname
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - properties:
+                      data:
+                        $ref: '#/components/schemas/GetTenantByHostname'
+  /host/{name}/strategies:
+    get:
+      tags:
+        - Tenants
+      summary: Retrieve tenant strategies by hostname
+      operationId: get-strategies-by-host
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+          description: Nombre del host perteneciente al cname
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AuthStrategy'
 components:
   schemas:
-    Tenant:
+    TenantComunProperties:
       type: object
       properties:
-        _id:
-          type: string
-        name:
-          type: string
-          description: Indica el nombre único del tenant
         logoUrl:
           type: string
           description: Url del logo que se debe mostrar en el frontend
-        canonicalDNS:
-          type: string
-          description: Nombre canónico que será usado por el tenant
         lookandfeelUrl:
           type: string
           description: Url de las variables de css para el look&feel del tenant
@@ -109,15 +151,67 @@ components:
             - es-AR
             - pt-BR
           description: Indica el idioma con el que se debe mostrar el tenant
+    Tenant:
+      allOf:
+        - $ref: '#/components/schemas/CreateTenant'
+        - type: object
+          properties:
+            _id:
+              type: string
+    GetTenantByHostname:
+      allOf:
+        - $ref: '#/components/schemas/TenantComunProperties'
+        - type: object
+          properties:
+            _id:
+              type: string
+            name:
+              type: string
+              description: Indica el nombre único del tenant
+            country:
+              type: string
+              description: Indica el país root al que pertenece el host
+            host:
+              type: string
+              description: Nombre canónico que será usado por el host
+            authStrategies:
+              type: array
+              description: Indica la(s) estrategia(s) de autenticación permitidas para el host 
+              items:
+                $ref: '#/components/schemas/AuthStrategy'
+    CreateTenant:
+      allOf:
+        - $ref: '#/components/schemas/TenantComunProperties'
+        - type: object
+          properties:
+            name:
+              type: string
+              description: Indica el nombre único del tenant
+            cnames:
+              type: array
+              items:
+                $ref: '#/components/schemas/Cname'
+    UpdateTenant:
+      allOf:
+        - $ref: '#/components/schemas/TenantComunProperties'
+        - type: object
+          properties:
+            cnames:
+              type: array
+              items:
+                $ref: '#/components/schemas/Cname'
+    Cname:
+      type: object
+      properties:
         country:
           type: string
-          enum:
-            - ar
-            - br
-          description: Indica el país root al que pertenece el tenant
+          description: Indica el país root al que pertenece el host
+        host:
+          type: string
+          description: Nombre canónico que será usado por el host
         authStrategies:
           type: array
-          description: Indica la(s) estrategia(s) de autenticación permitidas para el tenant 
+          description: Indica la(s) estrategia(s) de autenticación permitidas para el host 
           items:
             $ref: '#/components/schemas/AuthStrategy'
     AuthStrategy:
@@ -135,14 +229,11 @@ components:
     OAuthStrategy:
       type: object
       properties:
-        hierarchy:
-          type: number
-          description: Indica la jerarquía de la estrategia sobre de las demás
         provider:
           type: string
           enum:
-            - GOOGLE
-            - MELI
+            - google
+            - mercadolibre
           description: Indica el tipo de proveedor de OAuth
         providerUrl:
           type: string
@@ -156,12 +247,17 @@ components:
         enablePublicSignUp:
           type: boolean
           description: Indica si la estrategia debe permitir registro de personas o sólo servirá para autenticación
+        clientId:
+          type: string
+          description: ID de cliente en el proveedor de oauth
+        clientSecret:
+          type: string
+          description: Secret de cliente en el proveedor de oauth
+        authorizationURL:
+          type: string
+          description: Url de autorización del proveedor de oauth
     NativeAuthStrategy:
       type: object
-      properties:
-        hierarchy:
-          type: number
-          description: Indica la jerarquía de la estrategia sobre de las demás
     SuccessResponse:
       type: object
       properties:

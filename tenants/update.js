@@ -23,14 +23,22 @@ module.exports.handler = (event, context, callback) => {
             _id: event.pathParameters.id,
         },
         ExpressionAttributeNames: {
-            '#authStrategies': 'authStrategies',
+            '#cnames': 'cnames',
+            '#logoUrl': 'logoUrl',
+            '#lookandfeelUrl': 'lookandfeelUrl',
+            '#logoutUrl': 'logoutUrl',
+            '#lang': 'lang',
         },
         ExpressionAttributeValues: {
-            ':authStrategies': data.authStrategies,
+            ':cnames': data.cnames,
+            ':logoUrl': data.logoUrl,
+            ':lookandfeelUrl': data.lookandfeelUrl,
+            ':logoutUrl': data.logoutUrl,
+            ':lang': data.lang,
             ':updatedAt': date,
         },
         UpdateExpression:
-            'SET #authStrategies = :authStrategies, updatedAt = :updatedAt',
+            'SET #cnames = :cnames, #logoUrl = :logoUrl, #lookandfeelUrl = :lookandfeelUrl, #logoutUrl = :logoutUrl, #lang = :lang, updatedAt = :updatedAt',
         ReturnValues: 'ALL_NEW',
     }
 
