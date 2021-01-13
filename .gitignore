@@ -1,4 +1,5 @@
 node_modules
+false
 .serverless
 .env.local.json
 .env.prod.json

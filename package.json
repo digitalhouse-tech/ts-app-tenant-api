@@ -11,6 +11,7 @@
         "migrate:down": "NODE_ENV=local node ./migrations --down"
     },
     "dependencies": {
+        "aws-sdk": "^2.826.0",
         "moment": "^2.29.1",
         "playhouse-nodejs-common": "git+https://npm:9ZfTjMYPgSsHL_vVt29f@gitlab.com/dhteam/playhouse-nodejs-common.git#PGD-832/add-serverless-success-response",
         "uuid": "^2.0.3"
