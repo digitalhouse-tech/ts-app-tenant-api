@@ -1,5 +1,5 @@
 node_modules
 .serverless
-env.local
-env.prod
-env.qa
+env.local.json
+env.prod.json
+env.qa.json
