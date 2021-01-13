@@ -29,6 +29,14 @@ module.exports.handler = (event, context, callback) => {
             )
         }
 
+        if (!result) {
+            callback(
+                null,
+                SlsErrorHandler(new NotFoundError(`Not found item.`))
+            )
+            return
+        }
+
         const tenant = result.Items.find(({ cnames }) =>
             cnames.find((cname) => cname.host === name)
         )
