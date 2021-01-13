@@ -1,6 +1,6 @@
 'use strict'
 
-require('dotenv-json')({ path: './env.local.json' })
+require('dotenv-json')({ path: './.env.local.json' })
 
 const fs = require('fs')
 const path = require('path')

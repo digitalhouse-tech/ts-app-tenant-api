@@ -1,7 +1,7 @@
 openapi: 3.0.0
 servers:
-  - description: Development Server
-    url: 'http://playground-tenant-api.vm/dev'
+  - description: Local Api
+    url: 'http://playground-tenant-api.vm/local'
 info:
   version: 1.0.0
   title: Tenants

@@ -1,5 +1,8 @@
 service: pg-tenant-api
 
+plugins:
+  - serverless-offline
+
 custom:
   serverless-offline:
     host: 0.0.0.0
@@ -13,7 +16,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   stage: ${opt:stage,'local'}
-  environment: ${file(./env.${opt:stage,'local'}.json)}
+  environment: ${file(./.env.${opt:stage,'local'}.json)}
 
 functions:
   get-by-id:
