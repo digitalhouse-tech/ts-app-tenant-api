@@ -6,7 +6,7 @@ const {
     InternalServerError,
     SuccessResponse,
     NotFoundError,
-} = require('playhouse-nodejs-common')
+} = require('@dhteam/pg-nodejs')
 
 AWS.config.update(config)
 const dynamoDb = new AWS.DynamoDB.DocumentClient()

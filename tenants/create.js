@@ -8,7 +8,7 @@ const {
     SlsErrorHandler,
     InternalServerError,
     SuccessResponse,
-} = require('playhouse-nodejs-common')
+} = require('@dhteam/pg-nodejs')
 const moment = require('moment')
 
 AWS.config.update(config)
