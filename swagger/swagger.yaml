@@ -3,7 +3,11 @@ servers:
   - description: Local Api
     url: 'http://playground-tenant-api.vm/local'
   - description: Development Api
-    url: 'https://758g04r9d6.execute-api.us-east-1.amazonaws.com/dev'
+    url: 'https://dev-pg-tenant-api.digitalhouse.com'
+  - description: QA Api
+    url: 'https://qa-pg-tenant-api.digitalhouse.com'
+  - description: Prod Api
+    url: 'https://prod-pg-tenant-api.digitalhouse.com'
 info:
   version: 1.0.0
   title: Tenants
