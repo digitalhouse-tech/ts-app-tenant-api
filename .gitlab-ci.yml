@@ -20,7 +20,7 @@ variables:
     image: $IMAGE_TAG
     script:
         - npm i
-        - 'curl --header "PRIVATE-TOKEN: $API_TOKEN " "$ENVS_REPOSITORY/$STAGE%2Ftenant-api%2F%2Eenv%2Ee2e%2Ejson/raw?ref=multitenant" > .env.$STAGE.json'
+        - 'curl --header "PRIVATE-TOKEN: $API_TOKEN " "$ENVS_REPOSITORY/$STAGE%2Ftenant-api%2F%2Eenv%2Ee2e%2Ejson/raw?ref=multitenant" > .env.e2e.json'
         - npm run test:e2e
 
 # General jobs
