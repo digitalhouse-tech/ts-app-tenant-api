@@ -1,0 +1,102 @@
+stages:
+  - build
+  - deploy
+  - e2e-testing
+  
+variables:
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+
+.deploy:
+  stage: deploy
+  image: $IMAGE_TAG
+  script:
+    - npm ci
+    - 'curl --header "PRIVATE-TOKEN: $API_TOKEN " "$ENVS_REPOSITORY/$STAGE%2Ftenant-api%2F%2Eenv%2E$STAGE%2Ejson/raw?ref=multitenant" > .env.$STAGE.json'
+    - sls deploy --stage $STAGE
+
+# Templates
+.e2e-testing:
+    stage: e2e-testing
+    image: $IMAGE_TAG
+    script:
+        - npm i
+        - 'curl --header "PRIVATE-TOKEN: $API_TOKEN " "$ENVS_REPOSITORY/$STAGE%2Ftenant-api%2F%2Eenv%2Ee2e%2Ejson/raw?ref=multitenant" > .env.$STAGE.json'
+        - npm run test:e2e
+
+# General jobs
+build:
+  stage: build
+  image: docker:19.03.12
+  services:
+    - docker:19.03.12-dind
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $IMAGE_TAG -f docker/gitlab-ci.dockerfile .
+    - docker push $IMAGE_TAG
+  only:
+    changes:
+      - docker/gitlab-ci.dockerfile
+
+# Development jobs
+deploy-dev:
+  extends:
+    - .deploy
+  variables:
+    STAGE: dev
+  environment: dev
+  only:
+    refs:
+      - dev
+
+e2e-testing-dev:
+  extends:
+    - .e2e-testing
+  variables:
+    STAGE: dev
+  only:
+    refs:
+      - dev
+
+# QA jobs
+deploy-qa:
+  extends:
+    - .deploy
+  variables:
+    STAGE: qa
+  environment: qa
+  only:
+    refs:
+      - QA
+
+e2e-testing-qa:
+  extends:
+    - .e2e-testing
+  variables:
+    STAGE: qa
+  only:
+    refs:
+      - QA
+
+# Prod jobs
+deploy-prod:
+  extends:
+    - .deploy
+  variables:
+    STAGE: prod
+  environment: prod
+  only:
+    refs:
+      - /^prod-.*$/
+  except:
+    - branches
+
+e2e-testing-prod:
+  extends:
+    - .e2e-testing
+  variables:
+    STAGE: prod
+  only:
+    refs:
+      - /^prod-.*$/
+  except:
+    - branches

@@ -3,4 +3,5 @@ false
 .serverless
 .env.local.json
 .env.prod.json
+.env.dev.json
 .env.qa.json

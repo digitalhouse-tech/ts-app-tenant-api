@@ -12,7 +12,7 @@ AWS.config.update(config)
 const dynamoDb = new AWS.DynamoDB.DocumentClient()
 
 module.exports.handler = (event, context, callback) => {
-    const name = event.pathParameters.name
+    const name = decodeURIComponent(event.pathParameters.name)
 
     const params = {
         TableName: process.env.DYNAMODB_TABLE,
@@ -36,6 +36,8 @@ module.exports.handler = (event, context, callback) => {
             )
             return
         }
+
+        console.log(result.Items, name)
 
         const tenant = result.Items.find(({ cnames }) =>
             cnames.find((cname) => cname.host === name)

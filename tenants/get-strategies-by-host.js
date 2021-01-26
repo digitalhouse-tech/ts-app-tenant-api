@@ -12,7 +12,7 @@ AWS.config.update(config)
 const dynamoDb = new AWS.DynamoDB.DocumentClient()
 
 module.exports.handler = (event, context, callback) => {
-    const name = event.pathParameters.name
+    const name = decodeURIComponent(event.pathParameters.name)
 
     const params = {
         TableName: process.env.DYNAMODB_TABLE,
