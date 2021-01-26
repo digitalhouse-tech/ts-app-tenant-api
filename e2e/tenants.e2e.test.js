@@ -18,6 +18,7 @@ describe('[e2e] testing', () => {
                 expect(res.body.data._id).to.be.equal(process.env.RESOURCE_ID)
                 done()
             })
+            .catch(console.log)
     })
 
     it('[GET] /host/{name}', (done) => {
@@ -27,19 +28,27 @@ describe('[e2e] testing', () => {
             .expect(200)
             .then((res) => {
                 expect(res.body.data._id).to.be.equal(process.env.RESOURCE_ID)
-                expect(res.body.data.host).to.be.equal(process.env.RESOURCE_HOSTNAME)
+                expect(res.body.data.host).to.be.equal(
+                    process.env.RESOURCE_HOSTNAME
+                )
                 done()
             })
+            .catch(console.log)
     })
 
     it('[GET] /host/{name}/strategies', (done) => {
         server
-            .get(`/host/${encodeURIComponent(process.env.RESOURCE_HOSTNAME)}/strategies`)
+            .get(
+                `/host/${encodeURIComponent(
+                    process.env.RESOURCE_HOSTNAME
+                )}/strategies`
+            )
             .expect('Content-Type', /json/)
             .expect(200)
             .then((res) => {
                 expect(Array.isArray(res.body.data)).to.be.true
                 done()
             })
+            .catch(console.log)
     })
 })
