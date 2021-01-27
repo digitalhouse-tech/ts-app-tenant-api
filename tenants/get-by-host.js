@@ -37,8 +37,6 @@ module.exports.handler = (event, context, callback) => {
             return
         }
 
-        console.log(result.Items, name)
-
         const tenant = result.Items.find(({ cnames }) =>
             cnames.find((cname) => cname.host === name)
         )
@@ -79,7 +77,10 @@ module.exports.handler = (event, context, callback) => {
             ...cname,
         }
 
-        const response = SlsResponse(new SuccessResponse(data))
+        const response = SlsResponse(new SuccessResponse(data), {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': true,
+        })
         callback(null, response)
     })
 }
