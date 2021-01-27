@@ -3,6 +3,7 @@
 const uuid = require('uuid')
 const AWS = require('aws-sdk')
 const config = require('../config')
+const headers = require('../utils/headers')
 const {
     SlsResponse,
     SlsErrorHandler,
@@ -37,7 +38,7 @@ module.exports.handler = (event, context, callback) => {
             return
         }
 
-        const response = SlsResponse(new SuccessResponse(params.Item))
+        const response = SlsResponse(new SuccessResponse(params.Item), headers)
         callback(null, response)
     })
 }

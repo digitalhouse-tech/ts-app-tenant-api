@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk')
 const config = require('../config')
+const headers = require('../utils/headers')
 const {
     SlsResponse,
     SlsErrorHandler,
@@ -29,7 +30,7 @@ module.exports.handler = (event, context, callback) => {
             )
         }
 
-        const response = SlsResponse(new SuccessResponse(result.Item))
+        const response = SlsResponse(new SuccessResponse(result.Item), headers)
         callback(null, response)
     })
 }
