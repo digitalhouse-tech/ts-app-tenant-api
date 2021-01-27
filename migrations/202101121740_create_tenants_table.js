@@ -49,7 +49,7 @@ function getItems() {
     return [
         {
             createdAt: '2021-01-08',
-            lookandfeelUrl: 'http://playground-look-and-feel.vm/corporate.css',
+            lookandfeelUrl: 'https://dev-pg-look-and-feel.digitalhouse.com/corporate.css',
             name: 'corporate',
             _id: '8aa25c8b-444d-4276-9a33-4294ac0ab5c0',
             lang: 'es-AR',
