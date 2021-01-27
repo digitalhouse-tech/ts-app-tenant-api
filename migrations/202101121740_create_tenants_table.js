@@ -56,7 +56,7 @@ function getItems() {
             logoUrl: 'https://assets.digitalhouse.com/pg/dev/logos/dh-logo.png',
             cnames: [
                 {
-                    host: 'http://corporate.playground-frontend.vm',
+                    host: 'http://localhost:3005',
                     authStrategies: [
                         {
                             type: 'OAuthStrategy',
