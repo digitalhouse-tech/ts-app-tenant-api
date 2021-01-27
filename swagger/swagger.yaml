@@ -71,7 +71,7 @@ paths:
       operationId: update
       parameters:
         - in: path
-          name: _id
+          name: id
           required: true
           schema:
             type: string
@@ -146,7 +146,7 @@ components:
     ApiKeyAuth:
       type: apiKey
       in: header
-      name: Authorization
+      name: x-api-key
   schemas:
     TenantComunProperties:
       type: object
