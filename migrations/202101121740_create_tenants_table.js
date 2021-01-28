@@ -70,7 +70,7 @@ function getItems() {
                                 clientSecret: '301HA4nTnZ2AtihbrXHl6eeW',
                                 enablePublicEnrolment: true,
                                 providerUrl:
-                                    'http://playground-course-api.vm/v1/api/oauth/google',
+                                    'http://localhost:4050/v1/api/oauth/google',
                             },
                         },
                         {
@@ -86,7 +86,7 @@ function getItems() {
                                 clientSecret:
                                     'yHYRMqBNnIHHAbNtTP3MCcj7lSc59A9B',
                                 providerUrl:
-                                    'http://playground-course-api.vm/v1/api/oauth/mercadolibre',
+                                    'http://localhost:4050/v1/api/oauth/mercadolibre',
                             },
                         },
                         {
