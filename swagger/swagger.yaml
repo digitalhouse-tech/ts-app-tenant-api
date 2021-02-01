@@ -157,6 +157,9 @@ components:
         lookandfeelUrl:
           type: string
           description: Url de las variables de css para el look&feel del tenant
+        showPoweredBy:
+          type: boolean
+          description: Indica si se debe mostrar el footer con el powered by
         lang:
           type: string
           enum:

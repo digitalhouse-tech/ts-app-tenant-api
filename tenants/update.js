@@ -28,16 +28,18 @@ module.exports.handler = (event, context, callback) => {
             '#logoUrl': 'logoUrl',
             '#lookandfeelUrl': 'lookandfeelUrl',
             '#lang': 'lang',
+            '#showPoweredBy': 'showPoweredBy',
         },
         ExpressionAttributeValues: {
             ':cnames': data.cnames,
             ':logoUrl': data.logoUrl,
             ':lookandfeelUrl': data.lookandfeelUrl,
             ':lang': data.lang,
+            ':showPoweredBy': data.showPoweredBy,
             ':updatedAt': date,
         },
         UpdateExpression:
-            'SET #cnames = :cnames, #logoUrl = :logoUrl, #lookandfeelUrl = :lookandfeelUrl, #lang = :lang, updatedAt = :updatedAt',
+            'SET #cnames = :cnames, #logoUrl = :logoUrl, #lookandfeelUrl = :lookandfeelUrl, #lang = :lang, #showPoweredBy = :showPoweredBy, updatedAt = :updatedAt',
         ReturnValues: 'ALL_NEW',
     }
 

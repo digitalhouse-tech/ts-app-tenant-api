@@ -54,6 +54,7 @@ function getItems() {
             _id: '8aa25c8b-444d-4276-9a33-4294ac0ab5c0',
             lang: 'es-AR',
             logoUrl: 'https://assets.digitalhouse.com/pg/dev/logos/dh-logo.png',
+            showPoweredBy: false,
             cnames: [
                 {
                     host: 'http://localhost:3005',
