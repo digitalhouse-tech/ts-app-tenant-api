@@ -157,9 +157,6 @@ components:
         lookandfeelUrl:
           type: string
           description: Url de las variables de css para el look&feel del tenant
-        logoutUrl:
-          type: string
-          description: Sí existe, indica la url a la que se debe redireccionar al usuario al cerrar sesión
         lang:
           type: string
           enum:
@@ -224,6 +221,9 @@ components:
         host:
           type: string
           description: Nombre canónico que será usado por el host
+        logoutUrl:
+          type: string
+          description: Sí existe, indica la url a la que se debe redireccionar al usuario al cerrar sesión
         authStrategies:
           type: array
           description: Indica la(s) estrategia(s) de autenticación permitidas para el host 

@@ -73,7 +73,6 @@ module.exports.handler = (event, context, callback) => {
             name: tenant.name,
             logoUrl: tenant.logoUrl,
             lookandfeelUrl: tenant.lookandfeelUrl,
-            logoutUrl: tenant.logoutUrl,
             lang: tenant.lang,
             ...cname,
         }
