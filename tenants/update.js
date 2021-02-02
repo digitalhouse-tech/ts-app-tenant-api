@@ -36,10 +36,11 @@ module.exports.handler = (event, context, callback) => {
             ':lookandfeelUrl': data.lookandfeelUrl,
             ':lang': data.lang,
             ':showPoweredBy': data.showPoweredBy,
+            ':showTermsAndConditions': data.showTermsAndConditions,
             ':updatedAt': date,
         },
         UpdateExpression:
-            'SET #cnames = :cnames, #logoUrl = :logoUrl, #lookandfeelUrl = :lookandfeelUrl, #lang = :lang, #showPoweredBy = :showPoweredBy, updatedAt = :updatedAt',
+            'SET #cnames = :cnames, #logoUrl = :logoUrl, #lookandfeelUrl = :lookandfeelUrl, #lang = :lang, #showPoweredBy = :showPoweredBy, #showTermsAndConditions = :showTermsAndConditions, updatedAt = :updatedAt',
         ReturnValues: 'ALL_NEW',
     }
 

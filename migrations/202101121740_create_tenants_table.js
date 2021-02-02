@@ -55,6 +55,7 @@ function getItems() {
             lang: 'es-AR',
             logoUrl: 'https://assets.digitalhouse.com/pg/dev/logos/dh-logo.png',
             showPoweredBy: false,
+            showTermsAndConditions: true,
             cnames: [
                 {
                     host: 'http://localhost:3005',
