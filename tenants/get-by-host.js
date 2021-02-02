@@ -75,6 +75,7 @@ module.exports.handler = (event, context, callback) => {
             lookandfeelUrl: tenant.lookandfeelUrl,
             lang: tenant.lang,
             showPoweredBy: tenant.showPoweredBy,
+            showTermsAndConditions: tenant.showTermsAndConditions,
             ...cname,
         }
 
