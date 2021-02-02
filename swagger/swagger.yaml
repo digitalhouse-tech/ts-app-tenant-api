@@ -1,7 +1,7 @@
 openapi: 3.0.0
 servers:
   - description: Local Api
-    url: 'http://playground-tenant-api.vm/local'
+    url: 'http://localhost:4093/local'
   - description: Development Api
     url: 'https://dev-pg-tenant-api.digitalhouse.com'
   - description: QA Api
