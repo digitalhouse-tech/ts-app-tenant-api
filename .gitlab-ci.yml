@@ -19,7 +19,7 @@ variables:
   stage: e2e-testing
   image: $IMAGE_TAG
   script:
-      - npm i
+      - npm ci
       - 'curl --header "PRIVATE-TOKEN: $API_TOKEN " "$ENVS_REPOSITORY/$STAGE_FOLDER%2Ftenant-api%2F%2Eenv%2Ee2e%2Ejson/raw?ref=master" > .env.e2e.json'
       - npm run test:e2e
 
@@ -38,7 +38,7 @@ build:
       - docker/ci/Dockerfile
 
 # Development jobs
-deploy-dev:
+deploy-gbl-dev:
   extends:
     - .deploy
   variables:
@@ -49,7 +49,7 @@ deploy-dev:
     refs:
       - dev
 
-e2e-testing-dev:
+e2e-testing-gbl-dev:
   extends:
     - .e2e-testing
   variables:
@@ -59,7 +59,7 @@ e2e-testing-dev:
       - dev
 
 # QA jobs
-deploy-qa:
+deploy-gbl-qa:
   extends:
     - .deploy
   variables:
@@ -70,7 +70,7 @@ deploy-qa:
     refs:
       - QA
 
-e2e-testing-qa:
+e2e-testing-gbl-qa:
   extends:
     - .e2e-testing
   variables:
@@ -80,7 +80,7 @@ e2e-testing-qa:
       - QA
 
 # Prod jobs
-deploy-prod:
+deploy-gbl-prod:
   extends:
     - .deploy
   variables:
@@ -89,17 +89,17 @@ deploy-prod:
   environment: prod
   only:
     refs:
-      - /^prod-.*$/
+      - /^gbl-prod-.*$/
   except:
     - branches
 
-e2e-testing-prod:
+e2e-testing-gbl-prod:
   extends:
     - .e2e-testing
   variables:
     STAGE_FOLDER: ar
   only:
     refs:
-      - /^prod-.*$/
+      - /^gbl-prod-.*$/
   except:
     - branches
