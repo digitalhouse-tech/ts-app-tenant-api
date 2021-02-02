@@ -11,17 +11,17 @@ variables:
   image: $IMAGE_TAG
   script:
     - npm ci
-    - 'curl --header "PRIVATE-TOKEN: $API_TOKEN " "$ENVS_REPOSITORY/$STAGE%2Ftenant-api%2F%2Eenv%2E$STAGE%2Ejson/raw?ref=master" > .env.$STAGE.json'
+    - 'curl --header "PRIVATE-TOKEN: $API_TOKEN " "$ENVS_REPOSITORY/$STAGE_FOLDER%2Ftenant-api%2F%2Eenv%2E$STAGE%2Ejson/raw?ref=master" > .env.$STAGE.json'
     - sls deploy --stage $STAGE
 
 # Templates
 .e2e-testing:
-    stage: e2e-testing
-    image: $IMAGE_TAG
-    script:
-        - npm i
-        - 'curl --header "PRIVATE-TOKEN: $API_TOKEN " "$ENVS_REPOSITORY/$STAGE%2Ftenant-api%2F%2Eenv%2Ee2e%2Ejson/raw?ref=master" > .env.e2e.json'
-        - npm run test:e2e
+  stage: e2e-testing
+  image: $IMAGE_TAG
+  script:
+      - npm i
+      - 'curl --header "PRIVATE-TOKEN: $API_TOKEN " "$ENVS_REPOSITORY/$STAGE_FOLDER%2Ftenant-api%2F%2Eenv%2Ee2e%2Ejson/raw?ref=master" > .env.e2e.json'
+      - npm run test:e2e
 
 # General jobs
 build:
@@ -42,8 +42,9 @@ deploy-dev:
   extends:
     - .deploy
   variables:
-    STAGE: dev
-  environment: dev
+    STAGE_FOLDER: dev
+    STAGE: gbl-dev
+  environment: gbl-dev
   only:
     refs:
       - dev
@@ -52,7 +53,7 @@ e2e-testing-dev:
   extends:
     - .e2e-testing
   variables:
-    STAGE: dev
+    STAGE_FOLDER: dev
   only:
     refs:
       - dev
@@ -62,8 +63,9 @@ deploy-qa:
   extends:
     - .deploy
   variables:
-    STAGE: qa
-  environment: qa
+    STAGE_FOLDER: qa
+    STAGE: gbl-qa
+  environment: gbl-qa
   only:
     refs:
       - QA
@@ -72,7 +74,7 @@ e2e-testing-qa:
   extends:
     - .e2e-testing
   variables:
-    STAGE: qa
+    STAGE_FOLDER: qa
   only:
     refs:
       - QA
@@ -82,7 +84,8 @@ deploy-prod:
   extends:
     - .deploy
   variables:
-    STAGE: prod
+    STAGE_FOLDER: ar
+    STAGE: gbl-prod
   environment: prod
   only:
     refs:
@@ -94,7 +97,7 @@ e2e-testing-prod:
   extends:
     - .e2e-testing
   variables:
-    STAGE: prod
+    STAGE_FOLDER: ar
   only:
     refs:
       - /^prod-.*$/
