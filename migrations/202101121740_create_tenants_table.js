@@ -80,13 +80,13 @@ function getItems() {
                             config: {
                                 redirectOnOpen: false,
                                 enablePublicSignUp: true,
-                                clientId: '6861563145345718',
+                                clientId: '506518984266150',
                                 authorizationURL:
                                     'https://auth.mercadolibre.com.ar/authorization',
                                 provider: 'mercadolibre',
                                 buttonOnNativeLogin: true,
                                 clientSecret:
-                                    'yHYRMqBNnIHHAbNtTP3MCcj7lSc59A9B',
+                                    'kEwqRl7iBDSIByujmgp9EUIZXIEctNZv',
                                 providerUrl:
                                     'http://localhost:4050/v1/api/oauth/mercadolibre',
                             },
