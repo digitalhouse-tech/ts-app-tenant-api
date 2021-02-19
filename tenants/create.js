@@ -11,11 +11,14 @@ const {
     SuccessResponse,
 } = require('@dhteam/pg-nodejs')
 const moment = require('moment')
+const { sentryLambdaInit, sentryWrapHandler } = require('@dhteam/pg-nodejs')
 
 AWS.config.update(config)
 const dynamoDb = new AWS.DynamoDB.DocumentClient()
 
-module.exports.handler = (event, context, callback) => {
+sentryLambdaInit()
+
+module.exports.handler = sentryWrapHandler(async (event, context, callback) => {
     const date = moment().format('YYYY-MM-DD')
     const data = JSON.parse(event.body)
 
@@ -41,4 +44,4 @@ module.exports.handler = (event, context, callback) => {
         const response = SlsResponse(new SuccessResponse(params.Item), headers)
         callback(null, response)
     })
-}
+})
