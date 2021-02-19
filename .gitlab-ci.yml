@@ -12,7 +12,7 @@ variables:
   image: $IMAGE_TAG
   script:
     - npm ci
-    - 'curl --header "PRIVATE-TOKEN: $API_TOKEN " "$ENVS_REPOSITORY/$STAGE_FOLDER%2Ftenant-api%2F%2Eenv%2E$STAGE%2Ejson/raw?ref=master" > .env.$STAGE.json'
+    - 'curl --header "PRIVATE-TOKEN: $API_TOKEN " "$ENVS_REPOSITORY/$STAGE_FOLDER%2Ftenant-api%2F%2Eenv%2Ejson/raw?ref=master" > .env.$STAGE.json'
     - sls deploy --stage $STAGE
 
 # Templates
