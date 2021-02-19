@@ -8,11 +8,14 @@ const {
     SuccessResponse,
     NotFoundError,
 } = require('@dhteam/pg-nodejs')
+const { sentryLambdaInit, sentryWrapHandler } = require('@dhteam/pg-nodejs')
 
 AWS.config.update(config)
 const dynamoDb = new AWS.DynamoDB.DocumentClient()
 
-module.exports.handler = (event, context, callback) => {
+sentryLambdaInit()
+
+module.exports.handler = sentryWrapHandler(async (event, context, callback) => {
     const name = decodeURIComponent(event.pathParameters.name)
 
     const params = {
@@ -70,4 +73,4 @@ module.exports.handler = (event, context, callback) => {
         )
         callback(null, response)
     })
-}
+})

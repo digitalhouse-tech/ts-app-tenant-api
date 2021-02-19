@@ -7,11 +7,13 @@ const {
     InternalServerError,
     SuccessResponse,
 } = require('@dhteam/pg-nodejs')
+const { sentryLambdaInit, sentryWrapHandler } = require('@dhteam/pg-nodejs')
 
 AWS.config.update(config)
 const dynamoDb = new AWS.DynamoDB.DocumentClient()
+sentryLambdaInit()
 
-module.exports.handler = (event, context, callback) => {
+module.exports.handler = sentryWrapHandler(async (event, context, callback) => {
     const params = {
         TableName: process.env.DYNAMODB_TABLE,
         Key: {
@@ -33,4 +35,4 @@ module.exports.handler = (event, context, callback) => {
         const response = SlsResponse(new SuccessResponse(result.Item), headers)
         callback(null, response)
     })
-}
+})

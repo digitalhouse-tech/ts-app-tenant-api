@@ -33,6 +33,8 @@ provider:
     AWS_ACCESS_KEY_ID: ${self:custom.secrets.AWS_ACCESS_KEY_ID}
     AWS_SECRET_ACCESS_KEY: ${self:custom.secrets.AWS_SECRET_ACCESS_KEY}
     DYNAMO_ENDPOINT: ${self:custom.secrets.DYNAMO_ENDPOINT}
+    SENTRY_ENABLED: ${self:custom.secrets.SENTRY_ENABLED}
+    SENTRY_DSN: ${self:custom.secrets.SENTRY_DSN}
 
 functions:
   get-by-id:
