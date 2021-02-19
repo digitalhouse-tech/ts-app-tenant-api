@@ -15,7 +15,7 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient()
 
 sentryLambdaInit()
 
-module.exports.handler = sentryWrapHandler(async (event, context, callback) => {
+module.exports.handler = sentryWrapHandler((event, context, callback) => {
     const name = decodeURIComponent(event.pathParameters.name)
 
     const params = {

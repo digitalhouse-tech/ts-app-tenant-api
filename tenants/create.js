@@ -18,7 +18,7 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient()
 
 sentryLambdaInit()
 
-module.exports.handler = sentryWrapHandler(async (event, context, callback) => {
+module.exports.handler = sentryWrapHandler((event, context, callback) => {
     const date = moment().format('YYYY-MM-DD')
     const data = JSON.parse(event.body)
 
