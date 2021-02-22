@@ -1,6 +1,6 @@
 {
     "name": "pg-tenant-api",
-    "version": "1.0.0",
+    "version": "1.42.0",
     "description": "Serverless CRUD service exposing a REST HTTP interface",
     "author": "",
     "license": "MIT",
