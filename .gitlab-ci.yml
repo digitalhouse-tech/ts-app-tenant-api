@@ -75,10 +75,10 @@ deploy-gbl-prod:
   variables:
     STAGE_FOLDER: ar
     STAGE: gbl-prod
-  environment: prod
+  environment: gbl-prod
   only:
     refs:
-      - /^gbl-prod-.*$/
+      - /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$/
   except:
     - branches
 
@@ -89,6 +89,6 @@ e2e-testing-gbl-prod:
     STAGE_FOLDER: ar
   only:
     refs:
-      - /^gbl-prod-.*$/
+      - /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$/
   except:
     - branches
