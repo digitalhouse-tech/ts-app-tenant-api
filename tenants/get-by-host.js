@@ -1,6 +1,5 @@
-const AWS = require('aws-sdk')
-const config = require('../config')
 const headers = require('../utils/headers')
+const getDynamoDb = require('../utils/get-dynamo-db')
 const {
     SlsResponse,
     SlsErrorHandler,
@@ -11,11 +10,11 @@ const {
 
 const { sentryLambdaInit, sentryWrapHandler } = require('@dhteam/pg-nodejs')
 
-AWS.config.update(config)
-const dynamoDb = new AWS.DynamoDB.DocumentClient()
 sentryLambdaInit()
 
 module.exports.handler = sentryWrapHandler((event, context, callback) => {
+    const dynamoDb = getDynamoDb()
+
     const name = decodeURIComponent(event.pathParameters.name)
 
     const params = {
@@ -40,6 +39,7 @@ module.exports.handler = sentryWrapHandler((event, context, callback) => {
             )
             return
         }
+        console.log(JSON.stringify(result.Items, null, 2))
 
         const tenant = result.Items.find(({ cnames }) =>
             cnames.find((cname) => cname.host === name)

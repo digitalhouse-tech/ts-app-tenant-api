@@ -6,7 +6,8 @@ plugins:
 custom:
   serverless-offline:
     host: 0.0.0.0
-  secrets: ${file(./.env.${opt:stage,'local'}.json)}
+  provider: ${file(./provider.yml)}
+  environment: ${file(./.env.${opt:stage,'local'}.json)}
 
 package:
   individually: true
@@ -17,24 +18,15 @@ provider:
   name: aws
   runtime: nodejs12.x
   lambdaHashingVersion: "20201221"
-  apiGateway:
-    shouldStartNameWithService: true
-    apiKeys: 
-      - ${self:custom.secrets.API_KEY}
+  timeout: 10
   stage: ${opt:stage,'local'}
-  region: ${self:custom.secrets.REGION}
-  role: ${self:custom.secrets.LAMBDA_ROLE_ARN}
-  logs:
-    restApi: true
-  environment:
-    NODE_ENV: ${self:custom.secrets.NODE_ENV}
-    DYNAMODB_TABLE: ${self:custom.secrets.DYNAMODB_TABLE}
-    REGION: ${self:custom.secrets.REGION}
-    AWS_ACCESS_KEY_ID: ${self:custom.secrets.AWS_ACCESS_KEY_ID}
-    AWS_SECRET_ACCESS_KEY: ${self:custom.secrets.AWS_SECRET_ACCESS_KEY}
-    DYNAMO_ENDPOINT: ${self:custom.secrets.DYNAMO_ENDPOINT}
-    SENTRY_ENABLED: ${self:custom.secrets.SENTRY_ENABLED}
-    SENTRY_DSN: ${self:custom.secrets.SENTRY_DSN}
+  apiGateway: ${self:custom.provider.apiGateway}
+  region: ${self:custom.provider.region}
+  vpc: ${self:custom.provider.vpc}
+  logs: ${self:custom.provider.logs}
+  tracing: ${self:custom.provider.tracing}
+  role: ${self:custom.provider.role}
+  environment: ${self:custom.environment}
 
 functions:
   get-by-id:

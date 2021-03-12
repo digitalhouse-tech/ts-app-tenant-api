@@ -1,8 +1,6 @@
 'use strict'
 
 const uuid = require('uuid')
-const AWS = require('aws-sdk')
-const config = require('../config')
 const headers = require('../utils/headers')
 const {
     SlsResponse,
@@ -12,13 +10,13 @@ const {
 } = require('@dhteam/pg-nodejs')
 const moment = require('moment')
 const { sentryLambdaInit, sentryWrapHandler } = require('@dhteam/pg-nodejs')
-
-AWS.config.update(config)
-const dynamoDb = new AWS.DynamoDB.DocumentClient()
+const getDynamoDb = require('../utils/get-dynamo-db')
 
 sentryLambdaInit()
 
 module.exports.handler = sentryWrapHandler((event, context, callback) => {
+    const dynamoDb = getDynamoDb()
+
     const date = moment().format('YYYY-MM-DD')
     const data = JSON.parse(event.body)
 

@@ -1,0 +1,7 @@
+region: fake
+logs:
+  restApi: true
+apiGateway:
+  shouldStartNameWithService: true
+  apiKeys: 
+    - local-pg-tenant

@@ -13,6 +13,7 @@
     },
     "dependencies": {
         "@dhteam/pg-nodejs": "^1.0.6-beta.0",
+        "amazon-dax-client": "^1.2.5",
         "aws-sdk": "^2.826.0",
         "moment": "^2.29.1",
         "uuid": "^2.0.3"
