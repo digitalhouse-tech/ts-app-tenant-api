@@ -25,8 +25,6 @@ module.exports = () => {
             console.log("INFO: I'm using DynamoDB from AWS SDK")
         }
 
-        console.log({ config })
-
         dynamoDb = new AWS.DynamoDB.DocumentClient(config)
     }
 

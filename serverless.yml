@@ -50,19 +50,3 @@ functions:
           path: /host/{name}/strategies
           method: get
           cors: true
-  create:
-    handler: tenants/create.handler
-    events:
-      - http:
-          path: /
-          method: post
-          cors: true
-          private: true
-  update:
-    handler: tenants/update.handler
-    events:
-      - http:
-          path: /{id}
-          method: put
-          cors: true
-          private: true

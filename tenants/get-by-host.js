@@ -39,10 +39,9 @@ module.exports.handler = sentryWrapHandler((event, context, callback) => {
             )
             return
         }
-        console.log(JSON.stringify(result.Items, null, 2))
 
-        const tenant = result.Items.find(({ cnames }) =>
-            cnames.find((cname) => cname.host === name)
+        const tenant = result.Items.find(({ hosts }) =>
+            hosts.find((host) => host.name === name)
         )
 
         if (!tenant) {
@@ -53,9 +52,7 @@ module.exports.handler = sentryWrapHandler((event, context, callback) => {
             return
         }
 
-        const cname = tenant.cnames.find((cname) => cname.host === name)
-
-        cname.authStrategies = cname.authStrategies.map((strategy) => {
+        tenant.authStrategies = tenant.authStrategies.map((strategy) => {
             if (strategy.type !== 'OAuthStrategy') {
                 return strategy
             }
@@ -71,15 +68,14 @@ module.exports.handler = sentryWrapHandler((event, context, callback) => {
             }
         })
 
+        const host = tenant.hosts.find((host) => host.name === name)
+
+        delete tenant.hosts
+
         const data = {
-            _id: tenant._id,
-            name: tenant.name,
-            logoUrl: tenant.logoUrl,
-            lookandfeelUrl: tenant.lookandfeelUrl,
-            lang: tenant.lang,
-            showPoweredBy: tenant.showPoweredBy,
-            showTermsAndConditions: tenant.showTermsAndConditions,
-            ...cname,
+            ...tenant,
+            host: name,
+            logoutUrl: host.logoutUrl,
         }
 
         const response = SlsResponse(new SuccessResponse(data), headers)

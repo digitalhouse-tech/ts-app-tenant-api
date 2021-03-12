@@ -31,8 +31,8 @@ module.exports.handler = sentryWrapHandler((event, context, callback) => {
             )
         }
 
-        const tenant = result.Items.find(({ cnames }) =>
-            cnames.find((cname) => cname.host === name)
+        const tenant = result.Items.find(({ hosts }) =>
+            hosts.find((host) => host.name === name)
         )
 
         if (!tenant) {
@@ -43,9 +43,7 @@ module.exports.handler = sentryWrapHandler((event, context, callback) => {
             return
         }
 
-        const cname = tenant.cnames.find((cname) => cname.host === name)
-
-        const authStrategies = cname.authStrategies.map((strategy) => {
+        const authStrategies = tenant.authStrategies.map((strategy) => {
             if (strategy.type !== 'OAuthStrategy') {
                 return strategy
             }

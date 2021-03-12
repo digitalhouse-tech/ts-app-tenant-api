@@ -6,7 +6,9 @@ require('dotenv-json')({
     path: path.resolve(process.cwd(), '.env.e2e.json'),
 })
 
-describe('[e2e] testing', () => {
+describe('[e2e] testing', function () {
+    this.timeout(5000)
+
     const server = request(process.env.API_URL)
 
     it('[GET] /{id}', (done) => {
