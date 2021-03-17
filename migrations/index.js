@@ -5,10 +5,14 @@ require('dotenv-json')({ path: './.env.local.json' })
 const fs = require('fs')
 const path = require('path')
 const basename = path.basename(module.filename)
-const config = require('../config')
 const AWS = require('aws-sdk')
 
-AWS.config.update(config)
+AWS.config.update({
+    region: process.env.REGION,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    endpoint: process.env.DYNAMO_ENDPOINT,
+})
 
 const ddb = new AWS.DynamoDB()
 const docClient = new AWS.DynamoDB.DocumentClient()
