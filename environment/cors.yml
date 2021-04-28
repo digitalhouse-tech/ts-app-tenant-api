@@ -1,0 +1,6 @@
+origin: '*'
+headers:
+  - TenantId
+  - Content-Type
+  - X-Api-Key
+  - Authorization

@@ -9,18 +9,18 @@
         "dynamodb-admin": "AWS_SECRET_ACCESS_KEY=fake AWS_ACCESS_KEY_ID=fake AWS_REGION=local DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin",
         "migrate": "NODE_ENV=local node ./migrations --up",
         "migrate:down": "NODE_ENV=local node ./migrations --down",
-        "test:e2e": "NODE_ENV=test node_modules/.bin/mocha e2e/* --recursive --exit "
+        "test:e2e": "node_modules/.bin/mocha e2e-test/* --recursive --exit "
     },
     "dependencies": {
-        "@dhteam/pg-nodejs": "^1.0.6-beta.0",
+        "@dhteam/pg-http-kit": "^1.0.0",
+        "@dhteam/pg-serverless-kit": "^1.0.1",
         "amazon-dax-client": "^1.2.5",
         "aws-sdk": "^2.826.0",
-        "moment": "^2.29.1",
-        "uuid": "^2.0.3"
+        "uuid": "^2.0.3",
+        "yamljs": "^0.3.0"
     },
     "devDependencies": {
         "chai": "^4.2.0",
-        "dotenv-json": "^1.0.0",
         "mocha": "^8.2.1",
         "serverless-offline": "^6.8.0",
         "supertest": "^6.1.3"

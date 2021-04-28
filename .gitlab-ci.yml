@@ -1,10 +1,14 @@
 stages:
+  # - unit-testing
   - deploy
   - e2e-testing
-  
+    
 variables:
   IMAGE_TAG: registry.gitlab.com/dhteam/playhouse-docker/sls-deploy:latest
 
+####################################################
+##                    TEMPLATES                   ##
+####################################################
 .deploy:
   stage: deploy
   tags:
@@ -12,74 +16,82 @@ variables:
   image: $IMAGE_TAG
   script:
     - npm ci
-    - 'curl --header "PRIVATE-TOKEN: $API_TOKEN " "$ENVS_REPOSITORY/$STAGE_FOLDER%2Ftenant-api%2Fprovider%2Eyml/raw?ref=master" > provider.yml'
-    - 'curl --header "PRIVATE-TOKEN: $API_TOKEN " "$ENVS_REPOSITORY/$STAGE_FOLDER%2Ftenant-api%2F%2Eenv%2Ejson/raw?ref=master" > .env.$STAGE.json'
     - sls deploy --stage $STAGE
 
-# Templates
 .e2e-testing:
   stage: e2e-testing
   tags:
     - pg-docker
   image: $IMAGE_TAG
   script:
-      - npm ci
-      - 'curl --header "PRIVATE-TOKEN: $API_TOKEN " "$ENVS_REPOSITORY/$STAGE_FOLDER%2Ftenant-api%2F%2Eenv%2Ee2e%2Ejson/raw?ref=master" > .env.e2e.json'
-      - npm run test:e2e
+    - npm ci
+    - NODE_ENV=$STAGE npm run test:e2e
 
-# Development jobs
+####################################################
+##                  GENERAL JOBS                  ##
+####################################################
+# unit-testing:
+#   stage: unit-testing
+#   tags:
+#     - pg-docker
+#   image: $IMAGE_TAG
+#   script:
+#     - npm ci
+#     - npm test
+#   only:
+#     - merge_requests
+
+####################################################
+##                DEVELOPMENT JOBS                ##
+####################################################
 deploy-gbl-dev:
   extends:
     - .deploy
   variables:
-    STAGE_FOLDER: dev
     STAGE: gbl-dev
   environment: gbl-dev
   only:
-    refs:
-      - dev
+    - dev
 
 e2e-testing-gbl-dev:
   extends:
     - .e2e-testing
   variables:
-    STAGE_FOLDER: dev
+    STAGE: gbl-dev
   only:
-    refs:
-      - dev
+    - dev
 
-# QA jobs
+####################################################
+##                     QA JOBS                    ##
+####################################################
 deploy-gbl-qa:
   extends:
     - .deploy
   variables:
-    STAGE_FOLDER: qa
     STAGE: gbl-qa
   environment: gbl-qa
   only:
-    refs:
-      - QA
+    - QA
 
 e2e-testing-gbl-qa:
   extends:
     - .e2e-testing
   variables:
-    STAGE_FOLDER: qa
+    STAGE: gbl-qa
   only:
-    refs:
-      - QA
+    - QA
 
-# Prod jobs
+####################################################
+##                 PRODUCTION JOBS                ##
+####################################################
 deploy-gbl-prod:
   extends:
     - .deploy
   variables:
-    STAGE_FOLDER: ar
     STAGE: gbl-prod
   environment: gbl-prod
   only:
-    refs:
-      - /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$/
+    - /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$/
   except:
     - branches
 
@@ -87,9 +99,8 @@ e2e-testing-gbl-prod:
   extends:
     - .e2e-testing
   variables:
-    STAGE_FOLDER: ar
+    STAGE: gbl-prod
   only:
-    refs:
-      - /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$/
+    - /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$/
   except:
     - branches

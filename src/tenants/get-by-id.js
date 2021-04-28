@@ -1,12 +1,12 @@
 const headers = require('../utils/headers')
 const getDynamoDb = require('../utils/get-dynamo-db')
+const { InternalServerError, SuccessResponse } = require('@dhteam/pg-http-kit')
 const {
+    sentryLambdaInit,
+    sentryWrapHandler,
     SlsResponse,
     SlsErrorHandler,
-    InternalServerError,
-    SuccessResponse,
-} = require('@dhteam/pg-nodejs')
-const { sentryLambdaInit, sentryWrapHandler } = require('@dhteam/pg-nodejs')
+} = require('@dhteam/pg-serverless-kit')
 
 sentryLambdaInit()
 

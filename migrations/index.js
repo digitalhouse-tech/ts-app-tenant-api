@@ -1,17 +1,20 @@
 'use strict'
 
-require('dotenv-json')({ path: './.env.local.json' })
-
-const fs = require('fs')
 const path = require('path')
+const fs = require('fs')
 const basename = path.basename(module.filename)
 const AWS = require('aws-sdk')
+const YAML = require('yamljs')
+
+const env = YAML.load(
+    path.resolve(process.cwd(), 'environment', 'local', 'env.yml')
+)
 
 AWS.config.update({
-    region: process.env.REGION,
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    endpoint: process.env.DYNAMO_ENDPOINT,
+    region: env.REGION,
+    accessKeyId: env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+    endpoint: env.DYNAMO_ENDPOINT,
 })
 
 const ddb = new AWS.DynamoDB()

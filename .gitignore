@@ -1,7 +1,3 @@
 node_modules
 false
 .serverless
-.env.local.json
-.env.prod.json
-.env.dev.json
-.env.qa.json

@@ -6,8 +6,9 @@ plugins:
 custom:
   serverless-offline:
     host: 0.0.0.0
-  provider: ${file(./provider.yml)}
-  environment: ${file(./.env.${opt:stage,'local'}.json)}
+  provider: ${file(./environment/${opt:stage,'local'}/provider.yml)}
+  cors: ${file(./environment/cors.yml)}
+  environment: ${file(./environment/${opt:stage,'local'}/env.yml)}
 
 package:
   individually: true
@@ -30,21 +31,21 @@ provider:
 
 functions:
   get-by-id:
-    handler: tenants/get-by-id.handler
+    handler: src/tenants/get-by-id.handler
     events:
       - http:
           path: /{id}
           method: get
           cors: true
   get-by-host:
-    handler: tenants/get-by-host.handler
+    handler: src/tenants/get-by-host.handler
     events:
       - http:
           path: /host/{name}
           method: get
           cors: true
   get-strategies-by-host:
-    handler: tenants/get-strategies-by-host.handler
+    handler: src/tenants/get-strategies-by-host.handler
     events:
       - http:
           path: /host/{name}/strategies

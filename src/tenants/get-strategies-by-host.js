@@ -1,14 +1,16 @@
 const headers = require('../utils/headers')
 const getDynamoDb = require('../utils/get-dynamo-db')
 const {
-    SlsResponse,
-    SlsErrorHandler,
     InternalServerError,
     SuccessResponse,
     NotFoundError,
-} = require('@dhteam/pg-nodejs')
-
-const { sentryLambdaInit, sentryWrapHandler } = require('@dhteam/pg-nodejs')
+} = require('@dhteam/pg-http-kit')
+const {
+    sentryLambdaInit,
+    sentryWrapHandler,
+    SlsResponse,
+    SlsErrorHandler,
+} = require('@dhteam/pg-serverless-kit')
 
 sentryLambdaInit()
 
@@ -32,14 +34,6 @@ module.exports.handler = sentryWrapHandler((event, context, callback) => {
             )
         }
 
-        if (!result) {
-            callback(
-                null,
-                SlsErrorHandler(new NotFoundError(`Not found item.`))
-            )
-            return
-        }
-
         const tenant = result.Items.find(({ hosts }) =>
             hosts.find((host) => host.name === name)
         )
@@ -52,33 +46,30 @@ module.exports.handler = sentryWrapHandler((event, context, callback) => {
             return
         }
 
-        tenant.authStrategies = tenant.authStrategies.map((strategy) => {
+        const authStrategies = tenant.authStrategies.map((strategy) => {
             if (strategy.type !== 'OAuthStrategy') {
                 return strategy
             }
             return {
                 ...strategy,
                 config: {
-                    redirectOnOpen: strategy.config.redirectOnOpen,
-                    enablePublicSignUp: strategy.config.enablePublicSignUp,
                     provider: strategy.config.provider,
-                    buttonOnNativeLogin: strategy.config.buttonOnNativeLogin,
-                    providerUrl: strategy.config.providerUrl,
+                    clientId: strategy.config.clientId,
+                    clientSecret: strategy.config.clientSecret,
+                    profileUrl: strategy.config.profileUrl,
+                    tokenURL: strategy.config.tokenURL,
+                    authorizationURL: strategy.config.authorizationURL,
+                    enablePublicSignUp: strategy.config.enablePublicSignUp,
+                    enablePublicEnrolment:
+                        strategy.config.enablePublicEnrolment,
                 },
             }
         })
 
-        const host = tenant.hosts.find((host) => host.name === name)
-
-        delete tenant.hosts
-
-        const data = {
-            ...tenant,
-            host: name,
-            logoutUrl: host.logoutUrl,
-        }
-
-        const response = SlsResponse(new SuccessResponse(data), headers)
+        const response = SlsResponse(
+            new SuccessResponse(authStrategies),
+            headers
+        )
         callback(null, response)
     })
 })
