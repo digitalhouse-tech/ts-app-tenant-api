@@ -3,41 +3,17 @@ servers:
   - description: Local Api
     url: 'http://localhost:4093/local'
   - description: Development Api
-    url: 'https://dev-pg-tenant-api.digitalhouse.com'
+    url: 'https://dev-gbl-pg-api.digitalhouse.com/tenant'
   - description: QA Api
-    url: 'https://qa-pg-tenant-api.digitalhouse.com'
+    url: 'https://qa-gbl-pg-api.digitalhouse.com/tenant'
   - description: Prod Api
-    url: 'https://prod-pg-tenant-api.digitalhouse.com'
+    url: 'https://prod-gbl-pg-api.digitalhouse.com/tenant'
 info:
   version: 1.0.0
   title: Tenants
   contact:
     email: enzo@digitalhouse.com
 paths:
-  /:
-    post:
-      tags:
-        - Tenants
-      security:
-        - ApiKeyAuth: []
-      summary: Create a new tenant
-      operationId: create
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateTenant'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/SuccessResponse'
-                  - properties:
-                      data:
-                        $ref: '#/components/schemas/CreateTenant'
   /{id}:
     get:
       tags:
@@ -62,35 +38,6 @@ paths:
                   - properties:
                       data:
                         $ref: '#/components/schemas/Tenant'
-    put:
-      tags:
-        - Tenants
-      security:
-        - ApiKeyAuth: []
-      summary: Update tenant info
-      operationId: update
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateTenant'
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/SuccessResponse'
-                  - properties:
-                      data:
-                        $ref: '#/components/schemas/UpdateTenant'
   /host/{name}:
     get:
       tags:
