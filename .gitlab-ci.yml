@@ -27,6 +27,25 @@ variables:
     - npm ci
     - NODE_ENV=$STAGE npm run test:e2e
 
+.deploy-docs:
+  stage: deploy
+  tags:
+    - pg-docker
+  image: $IMAGE_TAG
+  variables:
+    UI_DIR: ui
+  environment: gbl-prod
+  script:
+    - pip3 install awscli --upgrade
+    - curl -Lo yaml2json https://github.com/wakeful/yaml2json/releases/latest/download/yaml2json-linux-amd64
+    - chmod +x yaml2json
+    - mv yaml2json /usr/local/bin/
+    - npm ci
+    - cp -r ./node_modules/@dhteam/pg-swagger-kit/src/$UI_DIR ./$UI_DIR
+    - yaml2json ./swagger.yml >> ./$UI_DIR/swagger.json
+    - aws s3 sync ./$UI_DIR s3://$SWAGGER_BUCKET_NAME/$STAGE/$API_NAME
+    - aws cloudfront create-invalidation --distribution-id $SWAGGER_CDN_DISTRIBUTION_ID --paths "/$STAGE/$API_NAME/*"
+
 ####################################################
 ##                  GENERAL JOBS                  ##
 ####################################################
@@ -53,6 +72,14 @@ deploy-gbl-dev:
   only:
     - dev
 
+deploy-docs-gbl-dev:
+  extends:
+    - .deploy-docs
+  variables:
+    STAGE: gbl-dev
+  only:
+    - dev
+
 e2e-testing-gbl-dev:
   extends:
     - .e2e-testing
@@ -73,6 +100,14 @@ deploy-gbl-qa:
   only:
     - QA
 
+deploy-docs-gbl-qa:
+  extends:
+    - .deploy-docs
+  variables:
+    STAGE: gbl-qa
+  only:
+    - QA
+
 e2e-testing-gbl-qa:
   extends:
     - .e2e-testing
@@ -90,6 +125,16 @@ deploy-gbl-prod:
   variables:
     STAGE: gbl-prod
   environment: gbl-prod
+  only:
+    - /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$/
+  except:
+    - branches
+
+deploy-docs-gbl-prod:
+  extends:
+    - .deploy-docs
+  variables:
+    STAGE: gbl-prod
   only:
     - /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$/
   except:
