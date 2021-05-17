@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "@dhteam/pg-http-kit": "^1.0.0",
-        "@dhteam/pg-serverless-kit": "^1.0.1",
+        "@dhteam/pg-serverless-kit": "^1.0.2-dev.0",
         "@dhteam/pg-swagger-kit": "^1.0.3",
         "amazon-dax-client": "^1.2.5",
         "aws-sdk": "^2.826.0",

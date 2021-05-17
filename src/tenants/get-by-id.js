@@ -1,37 +1,38 @@
 const headers = require('../utils/headers')
 const getDynamoDb = require('../utils/get-dynamo-db')
-const { InternalServerError, SuccessResponse } = require('@dhteam/pg-http-kit')
+const { SuccessResponse, BadRequestError } = require('@dhteam/pg-http-kit')
 const {
-    sentryLambdaInit,
-    sentryWrapHandler,
     SlsResponse,
     SlsErrorHandler,
+    sentryLambdaInit,
+    sentryWrapHandler,
 } = require('@dhteam/pg-serverless-kit')
+
+const { env } = process
 
 sentryLambdaInit()
 
-module.exports.handler = sentryWrapHandler((event, context, callback) => {
-    const dynamoDb = getDynamoDb()
+module.exports.handler = sentryWrapHandler(async (event) => {
+    try {
+        const dynamoDb = getDynamoDb()
 
-    const params = {
-        TableName: process.env.DYNAMODB_TABLE,
-        Key: {
-            _id: event.pathParameters.id,
-        },
-    }
+        const id = event.pathParameters.id
 
-    dynamoDb.get(params, (error, result) => {
-        if (error) {
-            console.error(error)
-            callback(
-                null,
-                SlsErrorHandler(
-                    new InternalServerError(`Couldn't fetch the tenant item.`)
-                )
-            )
+        if (!id) {
+            throw new BadRequestError('Bad Request: tenantId is missing.')
         }
 
-        const response = SlsResponse(new SuccessResponse(result.Item), headers)
-        callback(null, response)
-    })
+        const params = {
+            TableName: env.DYNAMODB_TABLE,
+            Key: {
+                _id: event.pathParameters.id,
+            },
+        }
+
+        const result = await dynamoDb.get(params).promise()
+
+        return SlsResponse(new SuccessResponse(result.Item), headers)
+    } catch (e) {
+        return SlsErrorHandler(e, headers)
+    }
 })

@@ -14,32 +14,20 @@ const {
 
 sentryLambdaInit()
 
-module.exports.handler = sentryWrapHandler((event, context, callback) => {
-    const dynamoDb = getDynamoDb()
+module.exports.handler = sentryWrapHandler(async (event) => {
+    try {
+        const dynamoDb = getDynamoDb()
 
-    const name = decodeURIComponent(event.pathParameters.name)
+        const name = decodeURIComponent(event.pathParameters.name)
 
-    const params = {
-        TableName: process.env.DYNAMODB_TABLE,
-    }
-
-    dynamoDb.scan(params, (error, result) => {
-        if (error) {
-            console.error(error)
-            callback(
-                null,
-                SlsErrorHandler(
-                    new InternalServerError(`Couldn't fetch the tenant item.`)
-                )
-            )
+        const params = {
+            TableName: process.env.DYNAMODB_TABLE,
         }
 
+        const result = await dynamoDb.scan(params).promise()
+
         if (!result) {
-            callback(
-                null,
-                SlsErrorHandler(new NotFoundError(`Not found item.`))
-            )
-            return
+            throw new NotFoundError(`Not found item.`)
         }
 
         const tenant = result.Items.find(({ hosts }) =>
@@ -47,11 +35,7 @@ module.exports.handler = sentryWrapHandler((event, context, callback) => {
         )
 
         if (!tenant) {
-            callback(
-                null,
-                SlsErrorHandler(new NotFoundError(`Not found item.`))
-            )
-            return
+            throw new NotFoundError(`Not found item.`)
         }
 
         tenant.authStrategies = tenant.authStrategies.map((strategy) => {
@@ -80,7 +64,8 @@ module.exports.handler = sentryWrapHandler((event, context, callback) => {
             logoutUrl: host.logoutUrl,
         }
 
-        const response = SlsResponse(new SuccessResponse(data), headers)
-        callback(null, response)
-    })
+        return SlsResponse(new SuccessResponse(data), headers)
+    } catch (e) {
+        return SlsErrorHandler(e, headers)
+    }
 })
