@@ -1,6 +1,6 @@
 origin: '*'
 headers:
-  - TenantId
+  - tenant-id
   - Content-Type
   - X-Api-Key
   - Authorization
