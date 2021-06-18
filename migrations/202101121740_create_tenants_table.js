@@ -1,10 +1,8 @@
-const TABLE_NAME = 'tenants'
-
-module.exports = (dynamodb, docClient) => ({
+module.exports = (dynamodb, docClient, env) => ({
     up: () =>
         dynamodb
             .createTable({
-                TableName: TABLE_NAME,
+                TableName: env.DYNAMODB_TABLE,
                 KeySchema: [{ AttributeName: '_id', KeyType: 'HASH' }],
                 AttributeDefinitions: [
                     { AttributeName: '_id', AttributeType: 'S' },
@@ -20,7 +18,7 @@ module.exports = (dynamodb, docClient) => ({
 
                 getItems().map((item) => {
                     const params = {
-                        TableName: process.env.DYNAMODB_TABLE,
+                        TableName: env.DYNAMODB_TABLE,
                         Item: item,
                     }
                     const promise = new Promise((resolve, reject) => {
@@ -40,7 +38,7 @@ module.exports = (dynamodb, docClient) => ({
     down: () =>
         dynamodb
             .deleteTable({
-                TableName: TABLE_NAME,
+                TableName: env.DYNAMODB_TABLE,
             })
             .promise(),
 })
@@ -49,13 +47,16 @@ function getItems() {
     return [
         {
             createdAt: '2021-01-08',
-            lookandfeelUrl: 'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/front-variables.css',
+            lookandfeelUrl:
+                'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/front-variables.css',
             name: 'corporate',
             _id: '8aa25c8b-444d-4276-9a33-4294ac0ab5c0',
             lang: 'es-AR',
             logoUrl: 'https://assets.digitalhouse.com/pg/dev/logos/pg.svg',
-            dhLogoUrl: 'https://assets.digitalhouse.com/pg/dev/logos/dh-logo.svg',
-            playstrapUrl: 'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/playstrap-variables.css',
+            dhLogoUrl:
+                'https://assets.digitalhouse.com/pg/dev/logos/dh-logo.svg',
+            playstrapUrl:
+                'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/playstrap-variables.css',
             showPoweredBy: false,
             showTermsAndConditions: true,
             authStrategies: [
@@ -84,8 +85,7 @@ function getItems() {
                             'https://auth.mercadolibre.com.ar/authorization',
                         provider: 'mercadolibre',
                         buttonOnNativeLogin: true,
-                        clientSecret:
-                            'kEwqRl7iBDSIByujmgp9EUIZXIEctNZv',
+                        clientSecret: 'kEwqRl7iBDSIByujmgp9EUIZXIEctNZv',
                         providerUrl:
                             'http://localhost:4050/v1/api/oauth/mercadolibre',
                     },
@@ -94,20 +94,26 @@ function getItems() {
                     type: 'NativeAuthStrategy',
                 },
             ],
-            hosts: [{
-                name: 'http://localhost:3005',
-            }],
+            hosts: [
+                {
+                    name: 'http://localhost:3005',
+                },
+            ],
             country: 'ar',
             updatedAt: '2021-01-08',
-        }, {
+        },
+        {
             createdAt: '2021-02-02',
-            lookandfeelUrl: 'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/front-variables.css',
+            lookandfeelUrl:
+                'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/front-variables.css',
             name: 'corporate',
             _id: '491717d4-2a6c-426d-9b77-cae09f8da34b',
             lang: 'es-AR',
             logoUrl: 'https://assets.digitalhouse.com/pg/dev/logos/pg.svg',
-            dhLogoUrl: 'https://assets.digitalhouse.com/pg/dev/logos/dh-logo.svg',
-            playstrapUrl: 'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/playstrap-variables.css',
+            dhLogoUrl:
+                'https://assets.digitalhouse.com/pg/dev/logos/dh-logo.svg',
+            playstrapUrl:
+                'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/playstrap-variables.css',
             showPoweredBy: false,
             authStrategies: [
                 {
@@ -135,14 +141,18 @@ function getItems() {
                             'https://auth.mercadolibre.com.ar/authorization',
                         provider: 'mercadolibre',
                         buttonOnNativeLogin: true,
-                        clientSecret:
-                            'kEwqRl7iBDSIByujmgp9EUIZXIEctNZv',
+                        clientSecret: 'kEwqRl7iBDSIByujmgp9EUIZXIEctNZv',
                         providerUrl:
                             'http://localhost:4050/v1/api/oauth/mercadolibre',
                     },
                 },
                 {
                     type: 'NativeAuthStrategy',
+                },
+            ],
+            hosts: [
+                {
+                    name: 'http://localhost:3006',
                 },
             ],
             country: 'ar',
