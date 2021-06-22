@@ -48,7 +48,7 @@ function getItems() {
         {
             createdAt: '2021-01-08',
             lookandfeelUrl:
-                'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/front-variables.css',
+                'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/ui/index.css',
             name: 'corporate',
             _id: '8aa25c8b-444d-4276-9a33-4294ac0ab5c0',
             lang: 'es-AR',
@@ -56,7 +56,7 @@ function getItems() {
             dhLogoUrl:
                 'https://assets.digitalhouse.com/pg/dev/logos/dh-logo.svg',
             playstrapUrl:
-                'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/playstrap-variables.css',
+                'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/playstrap/playstrap.css',
             showPoweredBy: false,
             showTermsAndConditions: true,
             authStrategies: [
@@ -105,7 +105,7 @@ function getItems() {
         {
             createdAt: '2021-02-02',
             lookandfeelUrl:
-                'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/front-variables.css',
+                'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/meli/ui/index.css',
             name: 'corporate',
             _id: '491717d4-2a6c-426d-9b77-cae09f8da34b',
             lang: 'es-AR',
@@ -113,7 +113,7 @@ function getItems() {
             dhLogoUrl:
                 'https://assets.digitalhouse.com/pg/dev/logos/dh-logo.svg',
             playstrapUrl:
-                'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/playstrap-variables.css',
+                'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/playstrap/playstrap.css',
             showPoweredBy: false,
             authStrategies: [
                 {
