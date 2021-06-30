@@ -35,7 +35,7 @@ fs.readdirSync(__dirname)
         if (file.slice(-3) !== '.js') return
         const migration = require('./' + file.slice(0, -3))
         try {
-            const method = migration(ddb, docClient)[methods[arg]]
+            const method = migration(ddb, docClient, env)[methods[arg]]
             if (method) {
                 await method()
                 console.log(`SUCCESS: ${file}. METHOD: ${methods[arg]}`)
