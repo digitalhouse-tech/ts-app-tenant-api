@@ -11,8 +11,6 @@ variables:
 ####################################################
 .deploy:
   stage: deploy
-  tags:
-    - pg-docker
   image: $IMAGE_TAG
   script:
     - npm ci
@@ -20,8 +18,6 @@ variables:
 
 .e2e-testing:
   stage: e2e-testing
-  tags:
-    - pg-docker
   image: $IMAGE_TAG
   script:
     - npm ci
@@ -29,8 +25,6 @@ variables:
 
 .deploy-docs:
   stage: deploy
-  tags:
-    - pg-docker
   image: $IMAGE_TAG
   variables:
     UI_DIR: ui
@@ -52,7 +46,7 @@ variables:
 # unit-testing:
 #   stage: unit-testing
 #   tags:
-#     - pg-docker
+#     - pg-qa-back
 #   image: $IMAGE_TAG
 #   script:
 #     - npm ci
@@ -66,6 +60,8 @@ variables:
 deploy-gbl-dev:
   extends:
     - .deploy
+  tags:
+    - pg-qa-back
   variables:
     STAGE: gbl-dev
   environment: gbl-dev
@@ -75,6 +71,8 @@ deploy-gbl-dev:
 deploy-docs-gbl-dev:
   extends:
     - .deploy-docs
+  tags:
+    - pg-qa-back
   variables:
     STAGE: gbl-dev
   only:
@@ -83,6 +81,8 @@ deploy-docs-gbl-dev:
 e2e-testing-gbl-dev:
   extends:
     - .e2e-testing
+  tags:
+    - pg-qa-back
   variables:
     STAGE: gbl-dev
   only:
@@ -94,6 +94,8 @@ e2e-testing-gbl-dev:
 deploy-gbl-qa:
   extends:
     - .deploy
+  tags:
+    - pg-qa-back
   variables:
     STAGE: gbl-qa
   environment: gbl-qa
@@ -103,6 +105,8 @@ deploy-gbl-qa:
 deploy-docs-gbl-qa:
   extends:
     - .deploy-docs
+  tags:
+    - pg-qa-back
   variables:
     STAGE: gbl-qa
   only:
@@ -111,6 +115,8 @@ deploy-docs-gbl-qa:
 e2e-testing-gbl-qa:
   extends:
     - .e2e-testing
+  tags:
+    - pg-qa-back
   variables:
     STAGE: gbl-qa
   only:
@@ -122,6 +128,8 @@ e2e-testing-gbl-qa:
 deploy-gbl-prod:
   extends:
     - .deploy
+  tags:
+    - pg-prod-back
   variables:
     STAGE: gbl-prod
   environment: gbl-prod
@@ -133,6 +141,8 @@ deploy-gbl-prod:
 deploy-docs-gbl-prod:
   extends:
     - .deploy-docs
+  tags:
+    - pg-prod-back
   variables:
     STAGE: gbl-prod
   only:
@@ -143,6 +153,8 @@ deploy-docs-gbl-prod:
 e2e-testing-gbl-prod:
   extends:
     - .e2e-testing
+  tags:
+    - pg-prod-back
   variables:
     STAGE: gbl-prod
   only:
