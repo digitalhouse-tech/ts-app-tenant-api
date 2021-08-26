@@ -11,6 +11,7 @@ const {
     SlsResponse,
     SlsErrorHandler,
 } = require('@dhteam/pg-serverless-kit')
+const clearAuthStrategies = require('../utils/clear-tenant')
 
 sentryLambdaInit()
 
@@ -30,31 +31,19 @@ module.exports.handler = sentryWrapHandler(async (event) => {
             throw new NotFoundError(`Not found item.`)
         }
 
-        const tenant = result.Items.find(({ hosts }) =>
-            hosts && hosts.find((host) => host.name === name)
+        const tenant = result.Items.find(
+            ({ hosts }) => hosts && hosts.find((host) => host.name === name)
         )
 
         if (!tenant) {
-            throw new NotFoundError(`Not found item or some tenant is wrong formed.`)
+            throw new NotFoundError(
+                `Not found item or some tenant is wrong formed.`
+            )
         }
 
-        const host = tenant.hosts.find(host => host.name === name)
+        const host = tenant.hosts.find((host) => host.name === name)
 
-        tenant.authStrategies = host.authStrategies.map((strategy) => {
-            if (strategy.type !== 'OAuthStrategy') {
-                return strategy
-            }
-            return {
-                ...strategy,
-                config: {
-                    redirectOnOpen: strategy.config.redirectOnOpen,
-                    enablePublicSignUp: strategy.config.enablePublicSignUp,
-                    provider: strategy.config.provider,
-                    buttonOnNativeLogin: strategy.config.buttonOnNativeLogin,
-                    providerUrl: strategy.config.providerUrl,
-                },
-            }
-        })
+        tenant.authStrategies = clearAuthStrategies(host.authStrategies)
         tenant.country = host.country
 
         delete tenant.hosts

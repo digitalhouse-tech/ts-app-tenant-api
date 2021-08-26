@@ -1,12 +1,17 @@
 const headers = require('../utils/headers')
 const getDynamoDb = require('../utils/get-dynamo-db')
-const { SuccessResponse, BadRequestError } = require('@dhteam/pg-http-kit')
+const {
+    SuccessResponse,
+    BadRequestError,
+    NotFoundError,
+} = require('@dhteam/pg-http-kit')
 const {
     SlsResponse,
     SlsErrorHandler,
     sentryLambdaInit,
     sentryWrapHandler,
 } = require('@dhteam/pg-serverless-kit')
+const clearAuthStrategies = require('../utils/clear-tenant')
 
 const { env } = process
 
@@ -29,10 +34,22 @@ module.exports.handler = sentryWrapHandler(async (event) => {
             },
         }
 
-        const result = await dynamoDb.get(params).promise()
+        const { Item: tenant } = await dynamoDb.get(params).promise()
 
-        return SlsResponse(new SuccessResponse(result.Item), headers)
+        if (!tenant) {
+            throw new NotFoundError(`Not found item.`)
+        }
+
+        tenant.hosts = tenant.hosts.map((host) => {
+            return {
+                ...host,
+                authStrategies: clearAuthStrategies(host.authStrategies),
+            }
+        })
+
+        return SlsResponse(new SuccessResponse(tenant), headers)
     } catch (e) {
+        console.log(e)
         return SlsErrorHandler(e, headers)
     }
 })

@@ -26,15 +26,17 @@ module.exports.handler = sentryWrapHandler(async (event) => {
 
         const result = await dynamoDb.scan(params).promise()
 
-        const tenant = result.Items.find(({ hosts }) =>
-            hosts.find((host) => host.name === name)
+        const tenant = result.Items.find(
+            ({ hosts }) => hosts && hosts.find((host) => host.name === name)
         )
 
         if (!tenant) {
             throw new NotFoundError(`Not found item.`)
         }
 
-        const authStrategies = tenant.authStrategies.map((strategy) => {
+        const host = tenant.hosts.find((host) => host.name === name)
+
+        const authStrategies = host.authStrategies.map((strategy) => {
             if (strategy.type !== 'OAuthStrategy') {
                 return strategy
             }
@@ -56,6 +58,7 @@ module.exports.handler = sentryWrapHandler(async (event) => {
 
         return SlsResponse(new SuccessResponse(authStrategies), headers)
     } catch (e) {
+        console.log(e)
         return SlsErrorHandler(e, headers)
     }
 })
