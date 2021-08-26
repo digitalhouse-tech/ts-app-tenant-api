@@ -31,14 +31,16 @@ module.exports.handler = sentryWrapHandler(async (event) => {
         }
 
         const tenant = result.Items.find(({ hosts }) =>
-            hosts.find((host) => host.name === name)
+            hosts && hosts.find((host) => host.name === name)
         )
 
         if (!tenant) {
-            throw new NotFoundError(`Not found item.`)
+            throw new NotFoundError(`Not found item or some tenant is wrong formed.`)
         }
 
-        tenant.authStrategies = tenant.authStrategies.map((strategy) => {
+        const host = tenant.hosts.find(host => host.name === name)
+
+        tenant.authStrategies = host.authStrategies.map((strategy) => {
             if (strategy.type !== 'OAuthStrategy') {
                 return strategy
             }
@@ -53,8 +55,7 @@ module.exports.handler = sentryWrapHandler(async (event) => {
                 },
             }
         })
-
-        const host = tenant.hosts.find((host) => host.name === name)
+        tenant.country = host.country
 
         delete tenant.hosts
 
@@ -66,6 +67,7 @@ module.exports.handler = sentryWrapHandler(async (event) => {
 
         return SlsResponse(new SuccessResponse(data), headers)
     } catch (e) {
+        console.log(e)
         return SlsErrorHandler(e, headers)
     }
 })

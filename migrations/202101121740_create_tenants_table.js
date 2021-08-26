@@ -59,47 +59,48 @@ function getItems() {
                 'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/playstrap/playstrap.css',
             showPoweredBy: false,
             showTermsAndConditions: true,
-            authStrategies: [
-                {
-                    type: 'OAuthStrategy',
-                    config: {
-                        redirectOnOpen: false,
-                        enablePublicSignUp: false,
-                        clientId:
-                            '651303397206-ucasvj78adcem5pus5o7t0gl7mr2hra0.apps.googleusercontent.com',
-                        provider: 'google',
-                        buttonOnNativeLogin: true,
-                        clientSecret: '301HA4nTnZ2AtihbrXHl6eeW',
-                        enablePublicEnrolment: true,
-                        providerUrl:
-                            'http://localhost:4050/v1/api/oauth/google',
-                    },
-                },
-                {
-                    type: 'OAuthStrategy',
-                    config: {
-                        redirectOnOpen: false,
-                        enablePublicSignUp: true,
-                        clientId: '506518984266150',
-                        authorizationURL:
-                            'https://auth.mercadolibre.com.ar/authorization',
-                        provider: 'mercadolibre',
-                        buttonOnNativeLogin: true,
-                        clientSecret: 'kEwqRl7iBDSIByujmgp9EUIZXIEctNZv',
-                        providerUrl:
-                            'http://localhost:4050/v1/api/oauth/mercadolibre',
-                    },
-                },
-                {
-                    type: 'NativeAuthStrategy',
-                },
-            ],
             hosts: [
                 {
                     name: 'http://localhost:3005',
+                    country: 'ar',
+                    authStrategies: [
+                        {
+                            type: 'OAuthStrategy',
+                            config: {
+                                redirectOnOpen: false,
+                                enablePublicSignUp: false,
+                                clientId:
+                                    '651303397206-ucasvj78adcem5pus5o7t0gl7mr2hra0.apps.googleusercontent.com',
+                                provider: 'google',
+                                buttonOnNativeLogin: true,
+                                clientSecret: '301HA4nTnZ2AtihbrXHl6eeW',
+                                enablePublicEnrolment: true,
+                                providerUrl:
+                                    'http://localhost:4050/v1/api/oauth/google',
+                            },
+                        },
+                        {
+                            type: 'OAuthStrategy',
+                            config: {
+                                redirectOnOpen: false,
+                                enablePublicSignUp: true,
+                                clientId: '506518984266150',
+                                authorizationURL:
+                                    'https://auth.mercadolibre.com.ar/authorization',
+                                provider: 'mercadolibre',
+                                buttonOnNativeLogin: true,
+                                clientSecret:
+                                    'kEwqRl7iBDSIByujmgp9EUIZXIEctNZv',
+                                providerUrl:
+                                    'http://localhost:4050/v1/api/oauth/mercadolibre',
+                            },
+                        },
+                        {
+                            type: 'NativeAuthStrategy',
+                        },
+                    ],
                 },
             ],
-            country: 'ar',
             updatedAt: '2021-01-08',
         },
         {
@@ -115,47 +116,48 @@ function getItems() {
             playstrapUrl:
                 'https://dev-gbl-pg-lnf.digitalhouse.com/tenants/dh/playstrap/playstrap.css',
             showPoweredBy: false,
-            authStrategies: [
-                {
-                    type: 'OAuthStrategy',
-                    config: {
-                        redirectOnOpen: false,
-                        enablePublicSignUp: false,
-                        clientId:
-                            '651303397206-ucasvj78adcem5pus5o7t0gl7mr2hra0.apps.googleusercontent.com',
-                        provider: 'google',
-                        buttonOnNativeLogin: true,
-                        clientSecret: '301HA4nTnZ2AtihbrXHl6eeW',
-                        enablePublicEnrolment: true,
-                        providerUrl:
-                            'http://localhost:4050/v1/api/oauth/google',
-                    },
-                },
-                {
-                    type: 'OAuthStrategy',
-                    config: {
-                        redirectOnOpen: false,
-                        enablePublicSignUp: true,
-                        clientId: '506518984266150',
-                        authorizationURL:
-                            'https://auth.mercadolibre.com.ar/authorization',
-                        provider: 'mercadolibre',
-                        buttonOnNativeLogin: true,
-                        clientSecret: 'kEwqRl7iBDSIByujmgp9EUIZXIEctNZv',
-                        providerUrl:
-                            'http://localhost:4050/v1/api/oauth/mercadolibre',
-                    },
-                },
-                {
-                    type: 'NativeAuthStrategy',
-                },
-            ],
             hosts: [
                 {
                     name: 'http://localhost:3006',
+                    country: 'ar',
+                    authStrategies: [
+                        {
+                            type: 'OAuthStrategy',
+                            config: {
+                                redirectOnOpen: false,
+                                enablePublicSignUp: false,
+                                clientId:
+                                    '651303397206-ucasvj78adcem5pus5o7t0gl7mr2hra0.apps.googleusercontent.com',
+                                provider: 'google',
+                                buttonOnNativeLogin: true,
+                                clientSecret: '301HA4nTnZ2AtihbrXHl6eeW',
+                                enablePublicEnrolment: true,
+                                providerUrl:
+                                    'http://localhost:4050/v1/api/oauth/google',
+                            },
+                        },
+                        {
+                            type: 'OAuthStrategy',
+                            config: {
+                                redirectOnOpen: false,
+                                enablePublicSignUp: true,
+                                clientId: '506518984266150',
+                                authorizationURL:
+                                    'https://auth.mercadolibre.com.ar/authorization',
+                                provider: 'mercadolibre',
+                                buttonOnNativeLogin: true,
+                                clientSecret:
+                                    'kEwqRl7iBDSIByujmgp9EUIZXIEctNZv',
+                                providerUrl:
+                                    'http://localhost:4050/v1/api/oauth/mercadolibre',
+                            },
+                        },
+                        {
+                            type: 'NativeAuthStrategy',
+                        },
+                    ],
                 },
             ],
-            country: 'ar',
             updatedAt: '2021-02-02',
         },
     ]
