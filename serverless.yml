@@ -31,7 +31,7 @@ provider:
 
 functions:
   get-by-id:
-    description: Get by ID in Tenant Api
+    description: Get by ID
     handler: src/tenants/get-by-id.handler
     events:
       - http:
@@ -39,7 +39,7 @@ functions:
           method: get
           cors: ${self:custom.cors}
   get-by-host:
-    description: Get By Host in Tenant Api
+    description: Get By Host
     handler: src/tenants/get-by-host.handler
     events:
       - http:
@@ -47,7 +47,7 @@ functions:
           method: get
           cors: ${self:custom.cors}
   get-strategies-by-host:
-    description: Get strategies by host in Tenant Api
+    description: Get strategies by host
     handler: src/tenants/get-strategies-by-host.handler
     events:
       - http:
