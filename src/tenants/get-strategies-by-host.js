@@ -4,13 +4,13 @@ const {
     InternalServerError,
     SuccessResponse,
     NotFoundError,
-} = require('@dhteam/pg-http-kit')
+} = require('@digitalhouse-dev/http-kit')
 const {
     sentryLambdaInit,
     sentryWrapHandler,
     SlsResponse,
     SlsErrorHandler,
-} = require('@dhteam/pg-serverless-kit')
+} = require('@digitalhouse-dev/serverless-kit')
 
 sentryLambdaInit()
 

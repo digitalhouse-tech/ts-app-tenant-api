@@ -4,13 +4,13 @@ const {
     SuccessResponse,
     BadRequestError,
     NotFoundError,
-} = require('@dhteam/pg-http-kit')
+} = require('@digitalhouse-dev/http-kit')
 const {
     SlsResponse,
     SlsErrorHandler,
     sentryLambdaInit,
     sentryWrapHandler,
-} = require('@dhteam/pg-serverless-kit')
+} = require('@digitalhouse-dev/serverless-kit')
 const clearAuthStrategies = require('../utils/clear-tenant')
 
 const { env } = process

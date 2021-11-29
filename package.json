@@ -12,9 +12,9 @@
         "test:e2e": "node_modules/.bin/mocha e2e-test/* --recursive --exit "
     },
     "dependencies": {
-        "@dhteam/pg-http-kit": "^1.0.0",
-        "@dhteam/pg-serverless-kit": "^1.0.2-dev.2",
-        "@dhteam/pg-swagger-kit": "^1.0.3",
+        "@digitalhouse-dev/http-kit": "^1.0.0",
+        "@digitalhouse-dev/serverless-kit": "^1.0.1",
+        "@digitalhouse-dev/swagger-kit": "^1.0.0",
         "amazon-dax-client": "^1.2.5",
         "aws-sdk": "^2.826.0",
         "uuid": "^2.0.3",
