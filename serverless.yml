@@ -2,6 +2,7 @@ service: pg-tenant-api
 
 plugins:
   - serverless-offline
+  - serverless-prune-plugin
 
 custom:
   serverless-offline:
@@ -9,6 +10,9 @@ custom:
   provider: ${file(./environment/${opt:stage,'local'}/provider.yml)}
   cors: ${file(./environment/cors.yml)}
   environment: ${file(./environment/${opt:stage,'local'}/env.yml)}
+  prune:
+    automatic: true
+    number: 3
 
 package:
   individually: true
