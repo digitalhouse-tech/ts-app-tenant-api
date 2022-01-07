@@ -35,7 +35,7 @@ variables:
     - chmod +x yaml2json
     - mv yaml2json /usr/local/bin/
     - npm ci
-    - cp -r ./node_modules/@dhteam/pg-swagger-kit/src/$UI_DIR ./$UI_DIR
+    - cp -r ./node_modules/@digitalhouse-dev/swagger-kit/src/$UI_DIR ./$UI_DIR
     - yaml2json ./swagger.yml >> ./$UI_DIR/swagger.json
     - aws s3 sync ./$UI_DIR s3://$SWAGGER_BUCKET_NAME/$STAGE/$API_NAME
     - aws cloudfront create-invalidation --distribution-id $SWAGGER_CDN_DISTRIBUTION_ID --paths "/$STAGE/$API_NAME/*"
