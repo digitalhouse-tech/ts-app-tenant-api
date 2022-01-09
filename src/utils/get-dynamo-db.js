@@ -9,9 +9,7 @@ module.exports = () => {
         if (process.env.NODE_ENV !== 'local') {
             config.service = new AmazonDaxClient({
                 endpoints: [
-                    process.env.DAX_ENDPOINT_1,
-                    process.env.DAX_ENDPOINT_2,
-                    process.env.DAX_ENDPOINT_3,
+                    process.env.DAX_ENDPOINT,
                 ],
             })
             console.log("INFO: I'm using DynamoDB from AmazonDaxClient")
