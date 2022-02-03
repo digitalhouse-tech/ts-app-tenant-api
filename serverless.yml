@@ -48,7 +48,7 @@ functions:
           method: get
           cors: ${self:custom.cors}
     tags:
-     - env: ${env:ENVIRONMENT}            
+      env: ${env:ENVIRONMENT}           
   get-by-host:
     description: Get By Host
     handler: src/tenants/get-by-host.handler
@@ -58,7 +58,7 @@ functions:
           method: get
           cors: ${self:custom.cors}
     tags:
-     - env: ${env:ENVIRONMENT}            
+      env: ${env:ENVIRONMENT}           
   get-strategies-by-host:
     description: Get strategies by host
     handler: src/tenants/get-strategies-by-host.handler
@@ -68,4 +68,4 @@ functions:
           method: get
           cors: ${self:custom.cors}
     tags:
-     - env: ${env:ENVIRONMENT}            
+      env: ${env:ENVIRONMENT}            
