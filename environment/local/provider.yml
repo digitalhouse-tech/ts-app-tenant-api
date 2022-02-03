@@ -1,7 +1,18 @@
 region: fake
 logs:
   restApi: true
+tracing:
+  apiGateway: true
+  lambda: true
 apiGateway:
   shouldStartNameWithService: true
   apiKeys: 
     - local-pg-tenant
+role: fake
+vpc:
+  securityGroupIds:
+    - empty
+  subnetIds:
+    - empty
+    - empty
+    - empty
