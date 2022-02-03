@@ -1,4 +1,4 @@
-region: us-east-1
+region: ${env:AWS_DEFAULT_REGION}
 tracing:
   apiGateway: true
   lambda: true
@@ -7,12 +7,13 @@ logs:
 apiGateway:
   shouldStartNameWithService: true
   apiKeys: 
-    - qa-gbl-pg-tenant
-role: arn:aws:iam::553300625097:role/dynamodb-to-lambda
+    - ${env:API_KEY_NAME}
+iam:
+  role: ${env:AWS_DEPLOY_ROLE}
 vpc:
   securityGroupIds:
-    - sg-002a02945ab0497f5
+    - ${env:AWS_SG_ID}
   subnetIds:
-    - subnet-06c1b5eb2a1677aec
-    - subnet-03d432047931c10dd
-    - subnet-00a3966a4bd44fa6a
+    - ${env:AWS_SUBNET_1}
+    - ${env:AWS_SUBNET_2}
+    - ${env:AWS_SUBNET_3}
