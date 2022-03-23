@@ -12,6 +12,8 @@ variables:
 .deploy:
   stage: deploy
   image: $IMAGE_TAG
+  before_script:
+    - npm install --save-dev serverless-prune-plugin  
   script:
     - npm ci
     - sls deploy --stage $STAGE
