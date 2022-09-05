@@ -13,10 +13,12 @@ variables:
   stage: deploy
   image: $IMAGE_TAG
   before_script:
-    - npm install --save-dev serverless-prune-plugin  
+    - npm install -g serverless@3.21.0
+    - npm install --save-dev serverless-plugin-datadog@5.4.0 serverless-offline@9.1.2
+    - git clone https://$DATADOG_TEMPLATES:$DATADOG_TEMPLATES_TOKEN@gitlab.com/digitalhouse-team/do-sq/templates/serverless/datadog.git
   script:
     - npm ci
-    - sls deploy --stage $STAGE
+    - serverless deploy --verbose --stage $STAGE
 
 .e2e-testing:
   stage: e2e-testing
