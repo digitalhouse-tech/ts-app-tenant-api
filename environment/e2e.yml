@@ -1,0 +1,3 @@
+API_URL: ${param:e2e-api-url}
+RESOURCE_ID: ${param:e2e-resource-id}
+RESOURCE_HOSTNAME: ${param:e2e-resource-hostname}

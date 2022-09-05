@@ -1,40 +1,25 @@
+frameworkVersion: '3.21.0'
+
 service: pg-tenant-api
 
-provider:
-  name: aws
-  runtime: nodejs12.x
-  lambdaHashingVersion: "20201221"
-  timeout: 10
-  stage: ${opt:stage,'local'}
-  environment: ${file(./environment/${opt:stage,'local'}/env.yml)}
-  region: ${file(./environment/${opt:stage,'local'}/provider.yml):region}
-  vpc: ${file(./environment/${opt:stage,'local'}/provider.yml):vpc}
-  iam: ${file(./environment/${opt:stage,'local'}/provider.yml):iam}
-  logs: ${file(./environment/${opt:stage,'local'}/provider.yml):logs}
-  tracing: ${file(./environment/${opt:stage,'local'}/provider.yml):tracing}
-  deploymentBucket:
-      blockPublicAccess: true
-      serverSideEncryption: aws:kms
-      sseKMSKeyId: ${env:AWS_BUCKET_KMS_KEY}
-  kmsKeyArn: ${env:AWS_LAMBDA_KMS_KEY}
-  apiGateway: ${file(./environment/${opt:stage,'local'}/provider.yml):apiGateway}
+params: ${file(./environment/params.yml)}
+
+provider: ${file(./environment/provider.yml)}
 
 plugins:
+  - serverless-plugin-datadog
   - serverless-offline
-  - serverless-prune-plugin
 
 custom:
   serverless-offline:
-    host: 0.0.0.0
+      host: 0.0.0.0
   cors: ${file(./environment/cors.yml)}
-  prune:
-    automatic: true
-    number: 3
+  datadog: ${file(./environment/datadog.yml)}
 
 package:
   individually: true
   exclude:
-    - '.*/**'
+      - '.*/**'
 
 functions:
   get-by-id:
@@ -45,9 +30,7 @@ functions:
           path: /{id}
           method: get
           cors: ${self:custom.cors}
-    tags:
-      env: ${env:ENVIRONMENT}
-      service: pg-tenant-api           
+         
   get-by-host:
     description: Get By Host
     handler: src/tenants/get-by-host.handler
@@ -56,9 +39,7 @@ functions:
           path: /host/{name}
           method: get
           cors: ${self:custom.cors}
-    tags:
-      env: ${env:ENVIRONMENT}
-      service: pg-tenant-api         
+       
   get-strategies-by-host:
     description: Get strategies by host
     handler: src/tenants/get-strategies-by-host.handler
@@ -67,6 +48,3 @@ functions:
           path: /host/{name}/strategies
           method: get
           cors: ${self:custom.cors}
-    tags:
-      env: ${env:ENVIRONMENT}
-      service: pg-tenant-api         
