@@ -30,7 +30,9 @@ stages:
     UI_DIR: ui
   environment: prod
   script:
-    - pip3 install awscli --upgrade
+    - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    - unzip awscliv2.zip
+    - ./aws/install
     - curl -Lo yaml2json https://github.com/wakeful/yaml2json/releases/latest/download/yaml2json-linux-amd64
     - chmod +x yaml2json
     - mv yaml2json /usr/local/bin/
