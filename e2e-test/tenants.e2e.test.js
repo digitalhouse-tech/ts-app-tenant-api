@@ -7,7 +7,7 @@ require('dotenv').config()
 describe('[e2e] testing', function () {
     this.timeout(5000)
 
-    const server = request(process.env.E2E_API_URL)
+    const server = request(process.env.API_URL)
 
     it('[GET] /{id}', (done) => {
         server
