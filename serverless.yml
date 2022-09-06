@@ -1,9 +1,7 @@
 frameworkVersion: '3.21.0'
 
-service: pg-tenant-api
-
+service: pg-tenant-api-v3
 params: ${file(./environment/params.yml)}
-
 provider: ${file(./environment/provider.yml)}
 
 plugins:

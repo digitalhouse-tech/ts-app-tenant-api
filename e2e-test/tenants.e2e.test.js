@@ -2,23 +2,20 @@ const request = require('supertest')
 const path = require('path')
 const { expect } = require('chai')
 
-const YAML = require('yamljs')
-const env = YAML.load(
-    path.resolve(process.cwd(), 'environment', process.env.NODE_ENV, 'e2e.yml')
-)
+require('dotenv').config()
 
 describe('[e2e] testing', function () {
     this.timeout(5000)
 
-    const server = request(env.API_URL)
+    const server = request(process.env.E2E_API_URL)
 
     it('[GET] /{id}', (done) => {
         server
-            .get(`/${env.RESOURCE_ID}`)
+            .get(`/${process.env.E2E_RESOURCE_ID}`)
             .expect('Content-Type', /json/)
             .expect(200)
             .then((res) => {
-                expect(res.body.data._id).to.be.equal(env.RESOURCE_ID)
+                expect(res.body.data._id).to.be.equal(process.env.E2E_RESOURCE_ID)
                 done()
             })
             .catch(console.log)
@@ -26,13 +23,13 @@ describe('[e2e] testing', function () {
 
     it('[GET] /host/{name}', (done) => {
         server
-            .get(`/host/${encodeURIComponent(env.RESOURCE_HOSTNAME)}`)
+            .get(`/host/${encodeURIComponent(process.env.E2E_RESOURCE_HOSTNAME)}`)
             .expect('Content-Type', /json/)
             .expect(200)
             .then((res) => {
-                expect(res.body.data._id).to.be.equal(env.RESOURCE_ID)
+                expect(res.body.data._id).to.be.equal(process.env.E2E_RESOURCE_ID)
                 expect(res.body.data.host).to.be.equal(
-                    env.RESOURCE_HOSTNAME
+                    process.env.E2E_RESOURCE_HOSTNAME
                 )
                 done()
             })
@@ -43,7 +40,7 @@ describe('[e2e] testing', function () {
         server
             .get(
                 `/host/${encodeURIComponent(
-                    env.RESOURCE_HOSTNAME
+                    process.env.E2E_RESOURCE_HOSTNAME
                 )}/strategies`
             )
             .expect('Content-Type', /json/)
