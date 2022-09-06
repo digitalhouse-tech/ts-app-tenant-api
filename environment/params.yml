@@ -8,7 +8,7 @@ default:
   aws-bucket-name: gbl-core-serverless
   aws-bucket-kms-key: ${env:AWS_BUCKET_KMS_KEY, 'alias/aws/s3'}
   aws-lambda-kms-key-arn: ${env:AWS_LAMBDA_KMS_KEY, 'arn:aws:kms:us-east-1:999999999999:key/dummy'}
-  aws-api-key-name: ${param:environment}-${param:vertical}-pg-tenant-api
+  aws-api-key-name: ${param:environment}-pg-tenant-api
   aws-tracing-apigateway: false
   aws-tracing-lambda: false
   aws-version-function: false
@@ -32,12 +32,9 @@ default:
   #dax
   dax-endpoint: ${env:DAX_ENDPOINT, 'dummy'}
   #node
-  node-env: ${param:vertical}-${param:environment}
-  #e2e
-  e2e-api-url: https://${param:environment}-${param:vertical}-pg-api.digitalhouse.com/tenant 
-  e2e-resource-id: ${env:E2E_RESOURCE_ID, 'dummy'} 
+  node-env: ${param:environment}
 
-gbl-prod:
+prod:
   environment: prod
   #aws
   aws-log-retention: 180 
@@ -50,8 +47,6 @@ gbl-prod:
   #sentry
   sentry-enabled: true
   sentry-dsn: 'https://f364e7ce5b164ea89e5c25a87b542d37@sentry.io/1547158'
-  #e2e
-  resource-hostname: https://playground.digitalhouse.com
 qa:
   environment: qa
   #aws
@@ -62,31 +57,21 @@ qa:
   aws-memory-size-low: 256
   #datadog  
   datadog-enabled: true
-  #e2e
-  e2e-resource-hostname: https://${param:environment}-playground.digitalhouse.com
-gbl-dev:
+dev:
   environment: dev    
   #aws
   aws-log-retention: 180
   #sentry
   sentry-enabled: true
   sentry-dsn: 'https://695e87f0d8f14751b163461abab4fe6d@o277372.ingest.sentry.io/5769978'
-  #e2e
-  e2e-resource-hostname: http://localhost:3005  
 local:
   environment: local
   #aws
   aws-log-retention: 7
   aws-access-local: 'fake'
   aws-secret-local: 'fake'
-  #node
-  node-env: ${param:environment}
   #dynamo
   dynamo-table: tenants
-  dynamo-endpoint: http://dynamodb:8000
+  dynamo-endpoint: http://pg-dynamodb:8000
   #dax
   dax-endpoint: ''
-  #e2e
-  e2e-api-url: http://localhost:4093/local
-  e2e-resource-id: 8aa25c8b-444d-4276-9a33-4294ac0ab5c0
-  e2e-resource-hostname: http://localhost:3005

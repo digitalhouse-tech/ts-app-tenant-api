@@ -2,13 +2,12 @@
     "name": "pg-tenant-api",
     "version": "1.46.1",
     "description": "Serverless CRUD service exposing a REST HTTP interface",
-    "author": "",
     "license": "MIT",
     "scripts": {
         "start": "sls offline start",
         "dynamodb-admin": "AWS_SECRET_ACCESS_KEY=fake AWS_ACCESS_KEY_ID=fake AWS_REGION=local DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin",
-        "migrate": "NODE_ENV=local node ./migrations --up",
-        "migrate:down": "NODE_ENV=local node ./migrations --down",
+        "migrate": "node ./migrations --up",
+        "migrate:down": "node ./migrations --down",
         "test:e2e": "node_modules/.bin/mocha e2e-test/* --recursive --exit "
     },
     "dependencies": {
@@ -17,8 +16,7 @@
         "@digitalhouse-dev/swagger-kit": "^1.0.0",
         "amazon-dax-client": "^1.2.5",
         "aws-sdk": "^2.826.0",
-        "uuid": "^2.0.3",
-        "yamljs": "^0.3.0"
+        "uuid": "^2.0.3"
     },
     "devDependencies": {
         "chai": "^4.2.0",
@@ -26,6 +24,7 @@
         "serverless": "3.21.0",
         "serverless-offline": "9.1.2",
         "serverless-plugin-datadog": "5.4.0",
+        "dotenv": "^16.0.2",
         "supertest": "^6.1.3"
     }
 }

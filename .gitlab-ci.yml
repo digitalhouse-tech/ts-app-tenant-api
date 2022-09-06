@@ -1,17 +1,15 @@
+image: node:16.17.0
+
 stages:
   # - unit-testing
   - deploy
   - e2e-testing
-    
-variables:
-  IMAGE_TAG: registry.gitlab.com/dhteam/playhouse-docker/sls-deploy:latest
 
 ####################################################
 ##                    TEMPLATES                   ##
 ####################################################
 .deploy:
   stage: deploy
-  image: $IMAGE_TAG
   before_script:
     - npm install -g serverless@3.21.0
     - npm install --save-dev serverless-plugin-datadog@5.4.0 serverless-offline@9.1.2
@@ -22,17 +20,15 @@ variables:
 
 .e2e-testing:
   stage: e2e-testing
-  image: $IMAGE_TAG
   script:
     - npm ci
     - NODE_ENV=$STAGE npm run test:e2e
 
 .deploy-docs:
   stage: deploy
-  image: $IMAGE_TAG
   variables:
     UI_DIR: ui
-  environment: gbl-prod
+  environment: prod
   script:
     - pip3 install awscli --upgrade
     - curl -Lo yaml2json https://github.com/wakeful/yaml2json/releases/latest/download/yaml2json-linux-amd64
@@ -51,7 +47,7 @@ variables:
 #   stage: unit-testing
 #   tags:
 #     - pg-qa-back
-#   image: $IMAGE_TAG
+#
 #   script:
 #     - npm ci
 #     - npm test
@@ -61,106 +57,106 @@ variables:
 ####################################################
 ##                DEVELOPMENT JOBS                ##
 ####################################################
-deploy-gbl-dev:
+deploy-dev:
   extends:
     - .deploy
   tags:
     - pg-qa-back
   variables:
-    STAGE: gbl-dev
-  environment: gbl-dev
+    STAGE: dev
+  environment: dev
   only:
     - dev
 
-deploy-docs-gbl-dev:
+deploy-docs-dev:
   extends:
     - .deploy-docs
   tags:
     - pg-qa-back
   variables:
-    STAGE: gbl-dev
+    STAGE: dev
   only:
     - dev
 
-e2e-testing-gbl-dev:
+e2e-testing-dev:
   extends:
     - .e2e-testing
   tags:
     - pg-qa-back
   variables:
-    STAGE: gbl-dev
+    STAGE: dev
   only:
     - dev
 
 ####################################################
 ##                     QA JOBS                    ##
 ####################################################
-deploy-gbl-qa:
+deploy-qa:
   extends:
     - .deploy
   tags:
     - pg-qa-back
   variables:
-    STAGE: gbl-qa
-  environment: gbl-qa
+    STAGE: qa
+  environment: qa
   only:
-    - QA
+    - qa
 
-deploy-docs-gbl-qa:
+deploy-docs-qa:
   extends:
     - .deploy-docs
   tags:
     - pg-qa-back
   variables:
-    STAGE: gbl-qa
+    STAGE: qa
   only:
-    - QA
+    - qa
 
-e2e-testing-gbl-qa:
+e2e-testing-qa:
   extends:
     - .e2e-testing
   tags:
     - pg-qa-back
   variables:
-    STAGE: gbl-qa
+    STAGE: qa
   only:
-    - QA
+    - qa
 
 ####################################################
 ##                 PRODUCTION JOBS                ##
 ####################################################
-deploy-gbl-prod:
+deploy-prod:
   extends:
     - .deploy
   tags:
     - pg-prod-back
   variables:
-    STAGE: gbl-prod
-  environment: gbl-prod
+    STAGE: prod
+  environment: prod
   only:
     - /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$/
   except:
     - branches
 
-deploy-docs-gbl-prod:
+deploy-docs-prod:
   extends:
     - .deploy-docs
   tags:
     - pg-prod-back
   variables:
-    STAGE: gbl-prod
+    STAGE: prod
   only:
     - /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$/
   except:
     - branches
 
-e2e-testing-gbl-prod:
+e2e-testing-prod:
   extends:
     - .e2e-testing
   tags:
     - pg-prod-back
   variables:
-    STAGE: gbl-prod
+    STAGE: prod
   only:
     - /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$/
   except:
