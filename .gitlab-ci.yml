@@ -78,7 +78,6 @@ deploy-docs-dev:
     - pg-qa-back
   variables:
     STAGE: dev
-  environment: dev
   only:
     - dev
 
@@ -89,7 +88,6 @@ e2e-testing-dev:
     - pg-qa-back
   variables:
     STAGE: dev
-  environment: dev
   only:
     - dev
 
@@ -115,7 +113,6 @@ deploy-docs-qa:
     - pg-qa-back
   variables:
     STAGE: qa
-  environment: qa
   only:
     - qa
 
@@ -126,7 +123,6 @@ e2e-testing-qa:
     - pg-qa-back
   variables:
     STAGE: qa
-  environment: qa
   only:
     - qa
 
@@ -154,7 +150,6 @@ deploy-docs-prod:
     - pg-prod-back
   variables:
     STAGE: prod
-  environment: prod
   only:
     - /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$/
   except:
@@ -167,7 +162,6 @@ e2e-testing-prod:
     - pg-prod-back
   variables:
     STAGE: prod
-  environment: prod
   only:
     - /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*)?(\+[0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*)?$/
   except:
