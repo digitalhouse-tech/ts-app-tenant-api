@@ -1,5 +1,4 @@
 const request = require('supertest')
-const path = require('path')
 const { expect } = require('chai')
 
 require('dotenv').config()
