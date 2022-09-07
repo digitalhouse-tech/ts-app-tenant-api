@@ -1,37 +1,23 @@
-service: pg-tenant-api
+frameworkVersion: '3.21.0'
+
+service: pg-tenant-api-v3
+params: ${file(./environment/params.yml)}
+provider: ${file(./environment/provider.yml)}
 
 plugins:
+  - serverless-plugin-datadog
   - serverless-offline
-  - serverless-prune-plugin
 
 custom:
   serverless-offline:
-    host: 0.0.0.0
-  provider: ${file(./environment/${opt:stage,'local'}/provider.yml)}
+      host: 0.0.0.0
   cors: ${file(./environment/cors.yml)}
-  environment: ${file(./environment/${opt:stage,'local'}/env.yml)}
-  prune:
-    automatic: true
-    number: 3
+  datadog: ${file(./environment/datadog.yml)}
 
 package:
   individually: true
   exclude:
-    - '.*/**'
-
-provider:
-  name: aws
-  runtime: nodejs12.x
-  lambdaHashingVersion: "20201221"
-  timeout: 10
-  stage: ${opt:stage,'local'}
-  apiGateway: ${self:custom.provider.apiGateway}
-  region: ${self:custom.provider.region}
-  vpc: ${self:custom.provider.vpc}
-  logs: ${self:custom.provider.logs}
-  tracing: ${self:custom.provider.tracing}
-  role: ${self:custom.provider.role}
-  environment: ${self:custom.environment}
+      - '.*/**'
 
 functions:
   get-by-id:
@@ -42,6 +28,7 @@ functions:
           path: /{id}
           method: get
           cors: ${self:custom.cors}
+         
   get-by-host:
     description: Get By Host
     handler: src/tenants/get-by-host.handler
@@ -50,6 +37,7 @@ functions:
           path: /host/{name}
           method: get
           cors: ${self:custom.cors}
+       
   get-strategies-by-host:
     description: Get strategies by host
     handler: src/tenants/get-strategies-by-host.handler

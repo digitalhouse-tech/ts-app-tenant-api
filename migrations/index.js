@@ -4,17 +4,14 @@ const path = require('path')
 const fs = require('fs')
 const basename = path.basename(module.filename)
 const AWS = require('aws-sdk')
-const YAML = require('yamljs')
 
-const env = YAML.load(
-    path.resolve(process.cwd(), 'environment', 'local', 'env.yml')
-)
+require('dotenv').config()
 
 AWS.config.update({
-    region: env.REGION,
-    accessKeyId: env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
-    endpoint: env.DYNAMO_ENDPOINT,
+    region: process.env.REGION,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    endpoint: process.env.DYNAMO_ENDPOINT,
 })
 
 const ddb = new AWS.DynamoDB()
@@ -35,7 +32,7 @@ fs.readdirSync(__dirname)
         if (file.slice(-3) !== '.js') return
         const migration = require('./' + file.slice(0, -3))
         try {
-            const method = migration(ddb, docClient, env)[methods[arg]]
+            const method = migration(ddb, docClient, process.env)[methods[arg]]
             if (method) {
                 await method()
                 console.log(`SUCCESS: ${file}. METHOD: ${methods[arg]}`)

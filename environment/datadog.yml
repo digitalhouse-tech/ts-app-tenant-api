@@ -1,0 +1,20 @@
+enabled: ${param:datadog-enabled}
+flushMetricsToLogs: false
+addExtension: true
+addLayers: true
+apiKey: ${env:DATADOG_API_KEY, 'apiKey'}
+appKey: ${env:DATADOG_APP_KEY, 'appKey'}
+captureLambdaPayload: true
+enableDDLogs: true
+enableDDTracing: true
+enableXrayTracing: true
+injectLogContext: true
+logLevel: ${param:datadog-log-level}
+subscribeToAccessLogs: true
+env: ${param:environment}
+service: ${param:service}
+version: 1.46.1
+tags: 'process:${param:process}'
+monitors:
+  - custom_high_error_rate: ${file(./datadog/monitors/pg_errors.yml), 'dummy'}
+  - custom_timeout: ${file(./datadog/monitors/pg_timeout.yml), 'dummy'}

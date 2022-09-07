@@ -1,6 +1,6 @@
-FROM node:12.20.0-alpine
+FROM node:16.17.0-alpine
 
-LABEL maintainer "Enzo García <enzo@digitalhouse.com>"
+LABEL maintainer "Benjamin Berger <benjamin@digitalhouse.com>"
 
 # Install project dependencies
 RUN apk add --no-cache python3 py3-pip && \
