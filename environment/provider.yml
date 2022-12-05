@@ -6,7 +6,7 @@ stage: ${opt:stage,'local'}
 region: ${param:aws-region}
 environment: ${file(./environment/env.yml)}
 iam:
-  role: ${env:AWS_DEPLOY_ROLE,'role'}
+  role: ${env:AWS_DEPLOY_ROLE, 'default-role'}
 deploymentPrefix: education
 deploymentBucket:
   name: ${param:environment}-${param:aws-bucket-name}
