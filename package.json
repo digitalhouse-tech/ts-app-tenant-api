@@ -11,9 +11,9 @@
         "test:e2e": "node_modules/.bin/mocha e2e-test/* --recursive --exit "
     },
     "dependencies": {
-        "@digitalhouse-dev/http-kit": "^1.0.0",
-        "@digitalhouse-dev/serverless-kit": "^1.0.1",
-        "@digitalhouse-dev/swagger-kit": "^1.0.0",
+        "@digitalhouse-tech/ts-lib-http": "^1.0.0",
+        "@digitalhouse-tech/ts-lib-serverless": "^1.0.1",
+        "@digitalhouse-tech/ts-lib-swagger": "^1.0.0",
         "amazon-dax-client": "^1.2.5",
         "aws-sdk": "^2.826.0",
         "uuid": "^2.0.3"
