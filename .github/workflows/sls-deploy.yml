@@ -1,0 +1,25 @@
+name: Deploy Serverless Framework
+
+on:
+  push:
+    branches:
+      - "staging"
+      - "qa"
+    tags:
+      - "**"
+
+jobs:
+  unit-test:
+    uses: digitalhouse-tech/github-pipeline-templates/.github/workflows/node-test.yml@main
+    secrets: inherit
+    with:
+      test: true
+      build: true
+  deploy:
+    needs: unit-test
+    uses: digitalhouse-tech/github-pipeline-templates/.github/workflows/serverless-deploy.yml@main
+    secrets: inherit
+  deploy-docs: 
+    needs: deploy
+    uses: digitalhouse-tech/github-pipeline-templates/.github/workflows/node-deploy-docs.yml@main
+    secrets: inherit
