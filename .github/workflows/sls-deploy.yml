@@ -19,6 +19,12 @@ jobs:
     needs: unit-test
     uses: digitalhouse-tech/github-pipeline-templates/.github/workflows/serverless-deploy.yml@main
     secrets: inherit
+  e2e-test: 
+    needs: deploy
+    uses: digitalhouse-tech/github-pipeline-templates/.github/workflows/node-test.yml@main
+    secrets: inherit
+    with:
+      e2e-test: true    
   deploy-docs: 
     needs: deploy
     uses: digitalhouse-tech/github-pipeline-templates/.github/workflows/node-deploy-docs.yml@main
