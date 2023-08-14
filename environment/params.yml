@@ -13,11 +13,6 @@ default:
   aws-tracing-lambda: false
   aws-version-function: false
   aws-region: us-east-1
-  aws-memory-size-high: 512
-  aws-memory-size-medium: 256
-  aws-memory-size-low: 128
-  aws-timeout-high: 30
-  aws-timeout-medium: 15
   aws-access-local: ''
   aws-secret-local: ''
   #datadog
@@ -38,9 +33,6 @@ prod:
   #aws
   aws-log-retention: 180 
   aws-tracing-apigateway: true
-  aws-memory-size-high: 1024
-  aws-memory-size-medium: 512
-  aws-memory-size-low: 256
   #datadog  
   datadog-enabled: true
   #sentry
@@ -51,9 +43,6 @@ qa:
   #aws
   aws-log-retention: 30
   aws-tracing-apigateway: true
-  aws-memory-size-high: 1024
-  aws-memory-size-medium: 512
-  aws-memory-size-low: 256
   #datadog  
   datadog-enabled: true
 local:
