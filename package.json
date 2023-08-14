@@ -4,6 +4,7 @@
     "description": "Serverless CRUD service exposing a REST HTTP interface",
     "license": "MIT",
     "scripts": {
+        "build": "",
         "start": "sls offline start",
         "dynamodb-admin": "AWS_SECRET_ACCESS_KEY=fake AWS_ACCESS_KEY_ID=fake AWS_REGION=local DYNAMO_ENDPOINT=http://localhost:8000 dynamodb-admin",
         "migrate": "node ./migrations --up",
