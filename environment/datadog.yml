@@ -26,5 +26,5 @@ enableSourceCodeIntegration: true
 captureLambdaPayload: true
 # Monitors
 monitors:
-  - custom_high_error_rate: ${file(./datadog/monitors/high_error_rate.yml), 'dummy'}
+  - custom_high_error_rate: ${file(./datadog/monitors/errors.yml), 'dummy'}
   - custom_timeout: ${file(./datadog/monitors/timeout.yml), 'dummy'}
