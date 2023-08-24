@@ -29,5 +29,3 @@ jobs:
     needs: deploy
     uses: digitalhouse-tech/github-pipeline-templates/.github/workflows/node-deploy-docs.yml@main
     secrets: inherit
-    with:
-      stage: "qa"
