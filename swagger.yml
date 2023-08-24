@@ -2,8 +2,6 @@ openapi: 3.0.0
 servers:
   - description: Local Api
     url: 'http://localhost:4093/local'
-  - description: Development Api
-    url: 'https://dev-gbl-pg-api.digitalhouse.com/tenant'
   - description: QA Api
     url: 'https://qa-gbl-pg-api.digitalhouse.com/tenant'
   - description: Prod Api
