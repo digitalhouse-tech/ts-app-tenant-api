@@ -24,6 +24,8 @@ subscribeToExecutionLogs: false
 injectLogContext: true
 enableSourceCodeIntegration: true
 captureLambdaPayload: true
+enableColdStartTracing: true
+enableProfiling: true
 # Monitors
 monitors:
   - custom_high_error_rate: ${file(./datadog/monitors/errors.yml), 'dummy'}
