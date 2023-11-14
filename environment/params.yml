@@ -28,11 +28,10 @@ default:
   dax-endpoint: ${env:DAX_ENDPOINT, 'dummy'}
   #node
   node-env: ${param:environment}
-
 prod:
   environment: prod
   #aws
-  aws-log-retention: 180 
+  aws-log-retention: 30 
   aws-tracing-apigateway: true
   #datadog  
   datadog-enabled: true
@@ -42,17 +41,10 @@ prod:
 qa:
   environment: qa
   #aws
-  aws-log-retention: 30
+  aws-log-retention: 7
   aws-tracing-apigateway: true
   #datadog  
   datadog-enabled: true
-dev:
-  environment: dev    
-  #aws
-  aws-log-retention: 180
-  #sentry
-  sentry-enabled: true
-  sentry-dsn: 'https://695e87f0d8f14751b163461abab4fe6d@o277372.ingest.sentry.io/5769978'
 local:
   environment: local
   #aws

@@ -14,7 +14,7 @@ enableXrayTracing: true
 tags: 'process:${param:process}'
 env: ${param:environment}
 service: ${param:service}
-version: 1.46.1
+version: v1.46.1
 # Logs
 enableDDLogs: true
 logLevel: ${param:datadog-log-level}
@@ -24,7 +24,9 @@ subscribeToExecutionLogs: false
 injectLogContext: true
 enableSourceCodeIntegration: true
 captureLambdaPayload: true
+enableColdStartTracing: true
+enableProfiling: true
 # Monitors
 monitors:
-  - custom_high_error_rate: ${file(./datadog/monitors/pg_errors.yml), 'dummy'}
-  - custom_timeout: ${file(./datadog/monitors/pg_timeout.yml), 'dummy'}
+  - custom_high_error_rate: ${file(./datadog/monitors/errors.yml), 'dummy'}
+  - custom_timeout: ${file(./datadog/monitors/timeout.yml), 'dummy'}
