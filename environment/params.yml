@@ -31,7 +31,7 @@ default:
 prod:
   environment: prod
   #aws
-  aws-log-retention: 180 
+  aws-log-retention: 30 
   aws-tracing-apigateway: true
   #datadog  
   datadog-enabled: true
@@ -41,7 +41,7 @@ prod:
 qa:
   environment: qa
   #aws
-  aws-log-retention: 30
+  aws-log-retention: 7
   aws-tracing-apigateway: true
   #datadog  
   datadog-enabled: true
